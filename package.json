@@ -1,0 +1,38 @@
+{
+  "name": "flux-boilerplate",
+  "version": "0.0.1",
+  "description": "Boilerplate for application that uses the flux Architecture",
+  "main": "js/app.js",
+  "dependencies": {
+    "flux": "^2.0.1",
+    "react": "~0.12",
+    "teoria": "^1.2.0"
+  },
+  "devDependencies": {
+    "array.prototype.find": "^1.0.0",
+    "browserify": "~6.1.0",
+    "envify": "~3.0.0",
+    "jest-cli": "~0.1.18",
+    "reactify": "~0.15.2",
+    "statics": "~0.1.0",
+    "uglify-js": "~2.4.15",
+    "watchify": "~2.0.0"
+  },
+  "scripts": {
+    "start": "STATIC_ROOT=./static NODE_ENV=development watchify -o js/bundle.js -v -d .",
+    "build": "STATIC_ROOT=./static NODE_ENV=production browserify . | ./node_modules/.bin/uglifyjs -cm > js/bundle.js",
+    "collect-static": "collect-static . ./static",
+    "test": "jest"
+  },
+  "author": "Yuval Ziegler",
+  "license": "MIT",
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  },
+  "jest": {
+    "rootDir": "./js"
+  }
+}

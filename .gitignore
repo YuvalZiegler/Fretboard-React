@@ -1,0 +1,5 @@
+.DS_Store
+bundle.js
+.idea/
+# https://github.com/substack/browserify-handbook#node_modules 
+node_modules/*
