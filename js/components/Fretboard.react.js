@@ -1,7 +1,7 @@
 var FretboardString = require('./String.react');
 var FretboardStore = require('../stores/FretboardStore');
 
-var React = require('react');
+var React = require('react/addons');
 
 function getStateFromStores() {
   return FretboardStore.getState()
@@ -13,19 +13,18 @@ var Fretboard = React.createClass({
     return {loaded: false}
   },
 
-  getStringView: function () {
+  getStringComponents: function () {
 
     var strings = [];
     // TODO: Make strings configuration selectable
-    var stringsRoots = this.state.fretboardStrings.guitar;
-
-    for (var l = stringsRoots.length; l > 0; l--) {
-
+    var stringsRoots = this.state.fretboardStrings[this.state.stringConfiguration]
+    
+    for (var l = stringsRoots.length; l--;) {
       strings.push(
           <FretboardString
-              key={"String" + l}
-              note={stringsRoots[(l - 1)]}
-          />
+              key={"String_" + l}
+              note={stringsRoots[l]}
+          ></FretboardString>
       )
     }
 
@@ -33,12 +32,12 @@ var Fretboard = React.createClass({
         <div id="fretboard">{strings}</div>
     );
   },
-  getLoadingView: function () {
+  getLoadingCompoent: function () {
     return (<div className="loading">loading</div>);
   },
   render: function () {
     console.log("View:" + __filename, this.state);
-    return this.state.loaded ? this.getStringView() : this.getLoadingView();
+    return this.state.loaded ? this.getStringComponents() : this.getLoadingCompoent();
   },
 
   componentDidMount: function () {

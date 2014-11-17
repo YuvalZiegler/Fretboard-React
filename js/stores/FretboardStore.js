@@ -56,7 +56,7 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
 FretboardStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
   
-  if (process.env.NODE_ENV == "development")  console.log("Store:", action);
+  if (process.env.NODE_ENV == "development") console.log("Store:", action);
   
   switch(action.type) {
     case ActionTypes.RECEIVE_INITIAL_STATE:

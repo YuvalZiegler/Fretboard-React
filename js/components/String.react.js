@@ -1,8 +1,9 @@
 var StringUI = require('./StringUI.react');
 var Fret = require('./Fret.react');
 var FretboardStore = require('../stores/FretboardStore');
-var React = require('react');
+var React = require('react/addons');
 var Teoria = require('Teoria');
+var ReactTransitionGroup = React.addons.TransitionGroup;
 
 function getStateFromStores() {
   return FretboardStore.getState()
@@ -42,10 +43,11 @@ var FretboardString = React.createClass({
     
     return classes;
   },
+
   render: function () {
 
     var frets = [];
-    for (var i = 0, l = this.state.notes.length; i < l; i++)
+    for (var i = -1, l = this.state.notes.length; l > ++i; )
 
       frets.push(
               <Fret
@@ -58,9 +60,9 @@ var FretboardString = React.createClass({
     return (
         <div>
           <StringUI/>
-          <ul className="string" data-tune={ this.props.note } onClick={ this._onClick }>
-             {frets}
-          </ul>
+          <ReactTransitionGroup component="string" className="string" data-tune={ this.props.note } >
+            { frets }
+          </ReactTransitionGroup>
         </div>
     )
   },

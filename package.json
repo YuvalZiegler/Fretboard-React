@@ -6,7 +6,8 @@
   "dependencies": {
     "flux": "^2.0.1",
     "react": "~0.12",
-    "teoria": "^1.2.0"
+    "teoria": "^1.2.0",
+    "react-tools": "~0.12"
   },
   "devDependencies": {
     "array.prototype.find": "^1.0.0",
@@ -16,13 +17,22 @@
     "reactify": "~0.15.2",
     "statics": "~0.1.0",
     "uglify-js": "~2.4.15",
-    "watchify": "~2.0.0"
+    "watchify": "~2.0.0",
+    "chai": "^1.9.1",
+    "gulp": "^3.8.7",
+    "gulp-if": "^1.2.4",
+    "gulp-livereload": "^2.1.0",
+    "gulp-notify": "^1.4.2",
+    "gulp-util": "^3.0.0",
+    "mocha": "^1.21.4",
+    "vinyl-source-stream": "^0.1.1",
+    "jquery": "^2.1.1"
   },
   "scripts": {
-    "start": "STATIC_ROOT=./static NODE_ENV=development watchify -o js/bundle.js -v -d .",
-    "build": "STATIC_ROOT=./static NODE_ENV=production browserify . | ./node_modules/.bin/uglifyjs -cm > js/bundle.js",
+    "start": "STATIC_ROOT=./static NODE_ENV=development watchify -o build/bundle.js -v -d .",
+    "build": "STATIC_ROOT=./static NODE_ENV=production browserify . | ./node_modules/.bin/uglifyjs -cm > build/bundle.js",
     "collect-static": "collect-static . ./static",
-    "test": "jest"
+    "test": "NODE_ENV=test jest"
   },
   "author": "Yuval Ziegler",
   "license": "MIT",
@@ -32,7 +42,21 @@
       "envify"
     ]
   },
+
   "jest": {
-    "rootDir": "./js"
+    "rootDir":"",
+    "scriptPreprocessor": "jest/preprocessor.js",
+    "modulePathIgnorePatterns": [
+      "/node_modules/",
+      "/.module-cache/"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "unmockedModulePathPatterns": [
+      ""
+    ]
+
   }
+
 }

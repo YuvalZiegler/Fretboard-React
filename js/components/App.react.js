@@ -1,9 +1,10 @@
 var Fretboard = require('./Fretboard.react');
+
 var Debug = require('./Debug.react');
 
 var FretboardStore = require('../stores/FretboardStore');
 
-var React = require('react');
+var React = require('react/addons');
 
 var App = React.createClass({
     
@@ -16,6 +17,7 @@ var App = React.createClass({
           <div id="application">
             {this.getDebugView()}
             <Fretboard/>
+            
          </div>
         )
     }

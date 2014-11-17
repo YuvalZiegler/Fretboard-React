@@ -34,10 +34,9 @@ body{
     user-select: none; 
 }
 
-#fretboard ul{
+#fretboard .string{
     overflow: hidden;
     cursor: col-resize;
-    list-style:none;
     border-bottom:1px solid;
     float:left;
     width:100%;
@@ -94,25 +93,30 @@ body{
     transition: transform, 200ms;
 }
 
-#fretboard li{
-    width:8.333%;
+#fretboard .fret-wrapper{
+        float:left;
+        width:8.333%;
+        border-right:1px solid;
+}
+#fretboard .fret{
+    width: 100%;
     min-height:60px;
     float:left;
-    border-right:1px solid;
+    
     position: relative; 
     overflow: hidden;
 }
 
-#fretboard li:first-of-type{
+#fretboard .fret:first-of-type{
   border-right-width:5px;
   border-right-style: solid;  
 }
-#fretboard li:last-of-type{
+#fretboard .fret:last-of-type{
   
   border-right-style: none;  
 }
 
-#fretboard li.active{
+#fretboard .fret.active{
     background: #647278;
     
 }
@@ -132,7 +136,7 @@ body{
     color:#40494D;
 }
 
-#fretboard li.active > .note{
+#fretboard .fret.active > .note{
     color:#E6E6E6;
     background: #40494D; 
     
@@ -140,7 +144,7 @@ body{
 
 
 
-#fretboard li.active > .note:before{
+#fretboard .fret.active > .note:before{
     position: absolute;
     content: "";
     z-index: -1;
@@ -152,7 +156,7 @@ body{
     transform: rotate(45deg)
 }
 
-#fretboard li.active > .note:after{
+#fretboard .fret.active > .note:after{
     position: absolute;
     content: "";
     z-index: -1;
@@ -164,7 +168,7 @@ body{
     
     
 }
-#fretboard li.unison > .note:after, #fretboard li.octave > .note:after{ background: #D64564; }
-#fretboard li.third > .note:after { background: #78CAE6; }
-#fretboard li.fifth > .note:after { background: #9FC439; }
-#fretboard li.seventh > .note:after { background: #d67f40; }
+#fretboard .fret.unison > .note:after, #fretboard .fret.octave > .note:after{ background: #D64564; }
+#fretboard .fret.third > .note:after { background: #78CAE6; }
+#fretboard .fret.fifth > .note:after { background: #9FC439; }
+#fretboard .fret.seventh > .note:after { background: #d67f40; }

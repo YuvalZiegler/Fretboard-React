@@ -3,7 +3,7 @@ var FretboardStartingData = require('./fixtures/FretboardStartingData');
 var FretboardAPI = require('./utilities/FretboardAPI');
 
 // attached to window to enable debugging with devTools
-var React  = window.React = require('react');
+var React =  require('react/addons');
 
 React.render(
   <App/>,
@@ -12,3 +12,8 @@ React.render(
 
 FretboardStartingData.init();
 FretboardAPI.getState();
+
+ if ("development" == process.env.NODE_ENV && window){
+  window.React = React;
+  window.Teoria = require('teoria');
+ }
