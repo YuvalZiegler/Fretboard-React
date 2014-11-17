@@ -9,6 +9,12 @@ function getStateFromStores() {
 
 
 var Fretboard = React.createClass({
+  
+  propTypes:{
+    strings: React.PropTypes.array
+  },
+
+
   getInitialState: function () {
     return {loaded: false}
   },
@@ -16,7 +22,7 @@ var Fretboard = React.createClass({
   getStringComponents: function () {
 
     var strings = [];
-    // TODO: Make strings configuration selectable
+    
     var stringsRoots = this.state.fretboardStrings[this.state.stringConfiguration]
     
     for (var l = stringsRoots.length; l--;) {

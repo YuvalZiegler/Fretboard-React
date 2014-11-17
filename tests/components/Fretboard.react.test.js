@@ -1,16 +1,32 @@
 var expect = require('chai').expect;
+/* Component Attributes:
+
+   <Fretbroad  
+      strings="{[ "e","a","d","g","b", "e" ]}
+      frets=12 
+      activeNotes={["c","e","g"]}
+      display=("notes" or "intervals")
+   />
+
+*/
 
 describe('Fretboard', function() {
-  it('is working', function() {
-    var React = require('react/addons');
-    var Fretbroad = require('../../js/components/Fretboard.react.js');
-    var TestUtils = React.addons.TestUtils;
+  var React = require('react/addons');
+  var Fretbroad = require('../../src/js/components/Fretboard.react.js');
+  var TestUtils = React.addons.TestUtils;
+  var instance;
+  beforeEach(function(done){
+      
+      instance = TestUtils.renderIntoDocument(
+        <Fretbroad strings={["a","e","c","d"]}/>
+      );
 
-    // Render a checkbox with label in the document
-    var fretboard = TestUtils.renderIntoDocument(
-      <Fretbroad  />
-    );
-
-    expect('Off').to.equal('On');
+      done()
+  })
+  it('its alive', function() {
+    
+    expect( instance.isMounted() ).to.equal( true );
   });
+  
+  
 });

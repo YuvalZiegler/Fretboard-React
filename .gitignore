@@ -1,6 +1,9 @@
 .DS_Store
 bundle.js
+.sass-cache/
 .idea/
 # https://github.com/substack/browserify-handbook#node_modules 
 node_modules/*
 todo.md
+build/
+tests/test-bundle.js

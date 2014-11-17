@@ -1,41 +1,16 @@
-// Gulp dependencies
-var gulp = require('gulp');
-var source = require('vinyl-source-stream');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var reactify = require('reactify');
-var livereload = require('gulp-livereload');
-var gutil = require('gulp-util');
-var gulpif = require('gulp-if');
-
-var handleError = require('./gulp/handleError');
-
-/** 
-  Use Browserify to bundle up our tests.
-  gulp test --watch --tests './tests/component_to_test.js'
-  Thanks to - http://blog.avisi.nl/2014/04/25/how-to-keep-a-fast-build-with-browserify-and-reactjs/ 
+/*
+  gulpfile.js
+  ===========
+  Rather than manage one giant configuration file responsible
+  for creating multiple tasks, each task has been broken out into
+  its own file in gulp/tasks. Any files in that directory get
+  automatically required below.
+  To add a new task, simply add a new task file that directory.
+  gulp/tasks/default.js specifies the default set of tasks to run
+  when you run `gulp`.
 */
-gulp.task('test', function () {
-    console.log("============= ",watchify.args ," =============")
-    var componentToTestPath = gutil.env.tests || "./tests/test.js";
-    var bundler = browserify(componentToTestPath, watchify.args);
 
-    if(gutil.env.watch) {
-        livereload.listen();
-        bundler = watchify(bundler);
-    }
+var requireDir = require('require-dir');
 
-    bundler.transform(reactify);
-
-    var rebundle = function() {
-        bundler.bundle()
-            .on('error', handleError('Browserify'))
-            .pipe(source(componentToTestPath))
-            .pipe(gulp.dest('./.tmp/test.js'))
-            .pipe(gulpif(gutil.env.watch, livereload()));
-    };
-
-    bundler.on('update', rebundle);
-
-    return rebundle();
-});
+// Require all tasks in gulp/tasks, including subfolders
+requireDir('./gulp/tasks', { recurse: true });

@@ -1,0 +1,174 @@
+* {
+  box-sizing: border-box; }
+
+html, body {
+  min-height: 100%; }
+
+body {
+  background: #E6E6E6;
+  color: #40494D;
+  font-family: "Helvetica Neue"; }
+
+#fretboard {
+  position: relative;
+  margin: 2em 0;
+  float: left;
+  width: 90%;
+  color: #40494D;
+  background: #FFFFFF;
+  min-width: 600px;
+  margin: 0 5%;
+  border-top: 5px solid;
+  border-right: 5px solid;
+  border-bottom: 5px solid;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none; }
+
+#fretboard .string {
+  overflow: hidden;
+  cursor: col-resize;
+  border-bottom: 1px solid;
+  float: left;
+  width: 100%;
+  margin: 0;
+  padding: 0; }
+
+#fretboard .ui-wrapper {
+  float: left;
+  clear: left;
+  position: relative;
+  text-align: center;
+  top: 3px; }
+
+#fretboard .ui-wrapper i {
+  position: absolute;
+  cursor: pointer;
+  left: -10px;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+  border-radius: 50%;
+  color: white;
+  font-style: normal;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  line-height: 17px;
+  cursor: pointer; }
+
+#fretboard .ui-wrapper i.delete {
+  top: 3px;
+  background: #D64564;
+  transform: rotate(45deg) scale(1);
+  transition: transform, 200ms; }
+
+#fretboard .ui-wrapper i.add {
+  top: 30px;
+  background: #9FC439;
+  transform: scale(1);
+  transition: transform, 200ms; }
+
+#fretboard .ui-wrapper i.delete:hover {
+  transform: rotate(45deg) scale(1.2);
+  transition: transform, 200ms; }
+
+#fretboard .ui-wrapper i.add:hover {
+  transform: scale(1.2);
+  transition: transform, 200ms; }
+
+#fretboard .fret-wrapper {
+  float: left;
+  width: 8.333%;
+  border-right: 1px solid; }
+
+#fretboard .fret {
+  width: 100%;
+  min-height: 60px;
+  float: left;
+  position: relative;
+  overflow: hidden; }
+
+#fretboard .fret:first-of-type {
+  border-right-width: 5px;
+  border-right-style: solid; }
+
+#fretboard .fret:last-of-type {
+  border-right-style: none; }
+
+#fretboard .fret.active {
+  background: #647278; }
+
+#fretboard .note {
+  cursor: pointer;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  z-index: 1;
+  color: #40494D; }
+
+#fretboard .fret.active > .note {
+  color: #FFFFCC;
+  background: #40494D; }
+  #fretboard .fret.active > .note span {
+    overflow: hidden;
+    display: block;
+    position: absolute;
+    width: 100%;
+    border-radius: 50%;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 20px 20px 1px #394145, 19px 19px 1px #394145, 18px 18px 1px #394145, 17px 17px 1px #394145, 16px 16px 1px #394145, 15px 15px 1px #394145, 14px 14px 1px #394145, 13px 13px 1px #394145, 12px 12px 1px #394145, 11px 11px 1px #394145, 10px 10px 1px #394145, 9px 9px 1px #394145, 8px 8px 1px #394145, 7px 7px 1px #394145, 6px 6px 1px #394145, 5px 5px 1px #394145, 4px 4px 1px #394145, 3px 3px 1px #394145, 2px 2px 1px #394145, 1px 1px 1px #394145; }
+
+#fretboard .fret.active > .note:before {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  width: 100px;
+  height: 40px;
+  left: 50%;
+  background: linear-gradient(90deg, #292f31, #647278);
+  transform-origin: 0 50%;
+  transform: rotate(45deg); }
+
+#fretboard .fret.active > .note:after {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  left: 0;
+  background: #40494D; }
+
+#fretboard .fret.unison > .note:after,
+#fretboard .fret.octave > .note:after {
+  background: #D64564; }
+
+#fretboard .fret.unison > .note span,
+#fretboard .fret.octave > .note span {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 20px 20px 1px #be2a4a, 19px 19px 1px #be2a4a, 18px 18px 1px #be2a4a, 17px 17px 1px #be2a4a, 16px 16px 1px #be2a4a, 15px 15px 1px #be2a4a, 14px 14px 1px #be2a4a, 13px 13px 1px #be2a4a, 12px 12px 1px #be2a4a, 11px 11px 1px #be2a4a, 10px 10px 1px #be2a4a, 9px 9px 1px #be2a4a, 8px 8px 1px #be2a4a, 7px 7px 1px #be2a4a, 6px 6px 1px #be2a4a, 5px 5px 1px #be2a4a, 4px 4px 1px #be2a4a, 3px 3px 1px #be2a4a, 2px 2px 1px #be2a4a, 1px 1px 1px #be2a4a; }
+
+#fretboard .fret.third > .note:after {
+  background: #78cae6; }
+
+#fretboard .fret.third > .note span {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 20px 20px 1px #4db9de, 19px 19px 1px #4db9de, 18px 18px 1px #4db9de, 17px 17px 1px #4db9de, 16px 16px 1px #4db9de, 15px 15px 1px #4db9de, 14px 14px 1px #4db9de, 13px 13px 1px #4db9de, 12px 12px 1px #4db9de, 11px 11px 1px #4db9de, 10px 10px 1px #4db9de, 9px 9px 1px #4db9de, 8px 8px 1px #4db9de, 7px 7px 1px #4db9de, 6px 6px 1px #4db9de, 5px 5px 1px #4db9de, 4px 4px 1px #4db9de, 3px 3px 1px #4db9de, 2px 2px 1px #4db9de, 1px 1px 1px #4db9de; }
+
+#fretboard .fret.fifth > .note:after {
+  background: #9FC439; }
+
+#fretboard .fret.fifth > .note span {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 20px 20px 1px #7f9c2e, 19px 19px 1px #7f9c2e, 18px 18px 1px #7f9c2e, 17px 17px 1px #7f9c2e, 16px 16px 1px #7f9c2e, 15px 15px 1px #7f9c2e, 14px 14px 1px #7f9c2e, 13px 13px 1px #7f9c2e, 12px 12px 1px #7f9c2e, 11px 11px 1px #7f9c2e, 10px 10px 1px #7f9c2e, 9px 9px 1px #7f9c2e, 8px 8px 1px #7f9c2e, 7px 7px 1px #7f9c2e, 6px 6px 1px #7f9c2e, 5px 5px 1px #7f9c2e, 4px 4px 1px #7f9c2e, 3px 3px 1px #7f9c2e, 2px 2px 1px #7f9c2e, 1px 1px 1px #7f9c2e; }
+
+#fretboard .fret.seventh > .note:after {
+  background: #A28BD9; }
+
+#fretboard .fret.seventh > .note span {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 20px 20px 1px #8365cc, 19px 19px 1px #8365cc, 18px 18px 1px #8365cc, 17px 17px 1px #8365cc, 16px 16px 1px #8365cc, 15px 15px 1px #8365cc, 14px 14px 1px #8365cc, 13px 13px 1px #8365cc, 12px 12px 1px #8365cc, 11px 11px 1px #8365cc, 10px 10px 1px #8365cc, 9px 9px 1px #8365cc, 8px 8px 1px #8365cc, 7px 7px 1px #8365cc, 6px 6px 1px #8365cc, 5px 5px 1px #8365cc, 4px 4px 1px #8365cc, 3px 3px 1px #8365cc, 2px 2px 1px #8365cc, 1px 1px 1px #8365cc; }
+
+/*# sourceMappingURL=application.css.map */

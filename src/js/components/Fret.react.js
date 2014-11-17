@@ -26,7 +26,11 @@ var Fret = React.createClass({
     return ( 
      <div className="fret-wrapper">
         <div className={ this.props.classes } data-note-id={ this.props.chroma } >
-          <div className="note" onClick={ this._onClick }>{ text }</div>
+          <div className="note" onClick={ this._onClick }>
+            <span>
+              { text }
+            </span>
+          </div>
         </div>
      </div>
     )
