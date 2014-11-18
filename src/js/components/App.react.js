@@ -16,8 +16,7 @@ var App = React.createClass({
         return ( 
           <div id="application">
             {this.getDebugView()}
-            <Fretboard/>
-            
+            <Fretboard />
          </div>
         )
     }

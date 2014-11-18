@@ -1,4 +1,5 @@
 .DS_Store
+tests/test-bundle.js
 bundle.js
 .sass-cache/
 .idea/
@@ -6,4 +7,3 @@ bundle.js
 node_modules/*
 todo.md
 build/
-tests/test-bundle.js

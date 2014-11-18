@@ -10,7 +10,9 @@ function getStateFromStores() {
 }
 
 var FretboardString = React.createClass({
-
+  propTypes: {
+    note: React.PropTypes.string.isRequired
+  },
   getInitialState: function () {
 
     var tonic      = Teoria.note.fromString(this.props.note);
@@ -36,8 +38,8 @@ var FretboardString = React.createClass({
   },
   getCssClasses: function(note){
     var classes= "fret"
-    
-    if ( FretboardStore.get("activeNotes").indexOf( note.chroma() ) >= 0) {
+    console.log( FretboardStore.get("activeNotes"), note.chroma());
+    if ( FretboardStore.get("activeNotes") &&  FretboardStore.get("activeNotes").indexOf( note.chroma() ) >= 0) {
       classes +=" active " +this._getIntervalName(note)
     }
     

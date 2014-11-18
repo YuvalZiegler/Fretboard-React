@@ -1,59 +1,47 @@
 var FretboardString = require('./String.react');
 var FretboardStore = require('../stores/FretboardStore');
-
+var Teoria = require('teoria');
 var React = require('react/addons');
-
-function getStateFromStores() {
-  return FretboardStore.getState()
-}
-
 
 var Fretboard = React.createClass({
   
   propTypes:{
-    strings: React.PropTypes.array
+    strings: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.array
+    ])
   },
-
-
-  getInitialState: function () {
-    return {loaded: false}
+  getDefaultProps: function(){
+    return {
+      strings:"e,a,b,c"
+    }
   },
-
-  getStringComponents: function () {
+  
+  getStrings: function () {
 
     var strings = [];
     
-    var stringsRoots = this.state.fretboardStrings[this.state.stringConfiguration]
-    
-    for (var l = stringsRoots.length; l--;) {
+    // convert string to array if needed
+    var arr = typeof this.props.strings ===  ("string") ? 
+              (this.props.strings).split(",") : this.props.strings
+
+    for (var l = arr.length; l--;) {
+     
       strings.push(
           <FretboardString
-              key={"String_" + l}
-              note={stringsRoots[l]}
+              key= {"String_" + l}
+              note={ arr[l] }
           ></FretboardString>
       )
+
     }
 
-    return (
-        <div id="fretboard">{strings}</div>
-    );
+    return strings;
   },
-  getLoadingCompoent: function () {
-    return (<div className="loading">loading</div>);
-  },
+
   render: function () {
-    console.log("View:" + __filename, this.state);
-    return this.state.loaded ? this.getStringComponents() : this.getLoadingCompoent();
+    return <div id="fretboard">{this.getStrings()}</div>
   },
-
-  componentDidMount: function () {
-    FretboardStore.addChangeListener(this._onChange);
-  },
-
-  _onChange: function () {
-    console.log("on change triggered");
-    this.setState(getStateFromStores());
-  }
 
 });
 

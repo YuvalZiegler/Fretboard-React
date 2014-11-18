@@ -10,15 +10,15 @@ var expect = require('chai').expect;
 
 */
 
-describe('Fretboard', function() {
+describe('FretboardString', function() {
   var React = require('react/addons');
-  var Fretbroad = require('../../src/js/components/Fretboard.react.js');
+  var FretboardString = require('../../src/js/components/String.react.js');
   var TestUtils = React.addons.TestUtils;
   var instance;
 
-  it('its should mount with no props', function() {
+  it('its should not mount with no note prop', function() {
     instance = TestUtils.renderIntoDocument(
-        <Fretbroad/>
+        <FretboardString note="a"/>
     );
     expect( instance.isMounted() ).to.equal( true );
   });
