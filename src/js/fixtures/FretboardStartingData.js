@@ -10,7 +10,7 @@ module.exports = {
           // display: name / interval
           display: "name",
           // string configuration from lowest to highest
-          stringConfiguration:"guitar",
+          stringConfiguration:["e,a,b,c,d"],
           fretboardStrings: {
             guitar: ["e2", "a2", "d3", "g3", "b3", "e4"],
             bass: ["e2", "a2", "d3", "g3"],

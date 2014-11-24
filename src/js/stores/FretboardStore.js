@@ -10,7 +10,6 @@ var _state = {};
 var FretboardStore = objectAssign(EventEmitter.prototype, {
 
   emitChange: function() {
-    
     this.emit(CHANGE_EVENT);
   },
 

@@ -8,13 +8,14 @@ $cream:           #FFFFCC;
 $arsenic:         #40494D;
 $tornadoGray:     #647278;
 
-@function sillyTextShadow($length:2, $color:$arsenic) {
+@function longTextShadow($color:$arsenic, $length:20) {
  
-  $result:1px 1px 1px rgba(0,0,0,0.2);
+  $result:1px 1px 1px rgba($color,1);
+
   @while $length > 0 {
     $result: #{$result}, #{$length}px #{$length}px 1px rgba($color,1);
     $length: $length - 1;
-}  
+  }
   @return $result
 }
    
@@ -36,7 +37,7 @@ body{
     margin:2em 0;
     float:left;
     width:90%;
-    color:#40494D;
+    color:$arsenic;
     background: #FFFFFF;
     min-width: 600px;
     margin: 0 5%;
@@ -161,11 +162,9 @@ body{
         position: absolute;
         width: 100%;
         border-radius: 50%;
-        text-shadow: sillyTextShadow(20, darken($arsenic,3%));
+        text-shadow: longTextShadow(darken($arsenic,3%));
     }
 }
-
-
 
 #fretboard .fret.active > .note:before{
     position: absolute;
@@ -174,7 +173,6 @@ body{
     width:100px;
     height:40px;
     left:50%;
-    //background: linear-gradient( 90deg, #292e31,#647278);
     background: linear-gradient( 90deg, darken($arsenic, 10%),$tornadoGray);
     transform-origin: 0 50%;
     transform: rotate(45deg)
@@ -194,10 +192,10 @@ body{
 #fretboard .fret.unison > .note:after, 
 #fretboard .fret.octave > .note:after  { background: $cranberry;}
 #fretboard .fret.unison > .note span, 
-#fretboard .fret.octave > .note span   { text-shadow:sillyTextShadow(20, darken($cranberry, 10%));}
+#fretboard .fret.octave > .note span   { text-shadow:longTextShadow( darken($cranberry, 10%));}
 #fretboard .fret.third > .note:after   { background: $skyBlue; }
-#fretboard .fret.third > .note span    { text-shadow:sillyTextShadow(20, darken($skyBlue, 10%)); }
+#fretboard .fret.third > .note span    { text-shadow:longTextShadow( darken($skyBlue, 10%)); }
 #fretboard .fret.fifth > .note:after   { background: $agingCilantro; }
-#fretboard .fret.fifth > .note span    { text-shadow: sillyTextShadow(20, darken($agingCilantro, 10%)); }
+#fretboard .fret.fifth > .note span    { text-shadow: longTextShadow( darken($agingCilantro, 10%)); }
 #fretboard .fret.seventh > .note:after { background: $chineseEggplant; }
-#fretboard .fret.seventh > .note span  {  text-shadow: sillyTextShadow(20, darken($chineseEggplant, 10%));; }
+#fretboard .fret.seventh > .note span  {  text-shadow: longTextShadow( darken($chineseEggplant, 10%)); }

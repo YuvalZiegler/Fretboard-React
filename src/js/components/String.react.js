@@ -38,7 +38,7 @@ var FretboardString = React.createClass({
   },
   getCssClasses: function(note){
     var classes= "fret"
-    console.log( FretboardStore.get("activeNotes"), note.chroma());
+    
     if ( FretboardStore.get("activeNotes") &&  FretboardStore.get("activeNotes").indexOf( note.chroma() ) >= 0) {
       classes +=" active " +this._getIntervalName(note)
     }

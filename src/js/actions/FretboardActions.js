@@ -21,4 +21,4 @@ var FretboardActions = {
 
 };
 
-module.exports = FretboardActions;
+module.exports = window.FretboardActions =  FretboardActions;

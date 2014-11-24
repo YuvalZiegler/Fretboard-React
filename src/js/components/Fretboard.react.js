@@ -1,6 +1,6 @@
+'use strict'
+
 var FretboardString = require('./String.react');
-var FretboardStore = require('../stores/FretboardStore');
-var Teoria = require('teoria');
 var React = require('react/addons');
 
 var Fretboard = React.createClass({
@@ -13,8 +13,9 @@ var Fretboard = React.createClass({
   },
   getDefaultProps: function(){
     return {
-      strings:"e,a,b,c"
-    }
+      strings:"e,a,d,g,b,e",
+      activeNotes:null
+    };
   },
   
   getStrings: function () {
@@ -22,15 +23,16 @@ var Fretboard = React.createClass({
     var strings = [];
     
     // convert string to array if needed
-    var arr = typeof this.props.strings ===  ("string") ? 
+    var stringsArray = typeof this.props.strings ===  ("string") ? 
               (this.props.strings).split(",") : this.props.strings
 
-    for (var l = arr.length; l--;) {
+    for (var index = stringsArray.length; index--;) {
      
       strings.push(
           <FretboardString
-              key= {"String_" + l}
-              note={ arr[l] }
+              key= { "String_" + index}
+              note={ stringsArray[index]  }
+              activeNotes = { this.props.activeNotes }
           ></FretboardString>
       )
 
@@ -40,8 +42,9 @@ var Fretboard = React.createClass({
   },
 
   render: function () {
+
     return <div id="fretboard">{this.getStrings()}</div>
-  },
+  }
 
 });
 

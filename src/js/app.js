@@ -13,7 +13,3 @@ React.render(
 FretboardStartingData.init();
 FretboardAPI.getState();
 
- if ("development" == process.env.NODE_ENV && window){
-  window.React = React;
-  window.Teoria = require('teoria');
- }

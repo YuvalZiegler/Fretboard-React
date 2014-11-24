@@ -6,20 +6,37 @@ var FretboardStore = require('../stores/FretboardStore');
 
 var React = require('react/addons');
 
+var FretboardStore = require('../stores/FretboardStore');
+
+function getStateFromStores() {
+  return FretboardStore.getState()
+}
+
 var App = React.createClass({
     
     getDebugView:function(){
         return process.env.NODE_ENV == "development" ? <Debug/> : null
     },
+
     render: function() {
-        
+
         return ( 
           <div id="application">
             {this.getDebugView()}
+            <Fretboard strings="a,b,c" activeNotes="c,e,g"/>
+            <h2> Default View </h2>
             <Fretboard />
          </div>
         )
+    },
+    componentDidMount: function () {
+        FretboardStore.addChangeListener(this._onChange);
+    },
+     
+    _onChange: function () {
+        this.setState(getStateFromStores());
     }
+
 });
 
 module.exports = App;
