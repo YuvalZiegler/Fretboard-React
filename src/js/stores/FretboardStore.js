@@ -36,17 +36,17 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
         case "chord":
             activeNotes = Teoria.chord( data.tonic + data.name )
                                 .notes()
-                                .map(function(note){ return note.chroma()});
+                                .map(function(note){ return note.name()});
             break;
         case "scale":
             activeNotes = Teoria.scale( data.tonic, data.name )
                                 .notes()
-                                .map(function(note){ return note.chroma()});
+                                .map(function(note){ return note.name()});
             break;
         default:
             activeNotes = [];
     }
-
+    console.log(activeNotes)
     return activeNotes;
   }
 });

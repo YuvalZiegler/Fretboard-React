@@ -17,15 +17,19 @@ var App = React.createClass({
     getDebugView:function(){
         return process.env.NODE_ENV == "development" ? <Debug/> : null
     },
-
+    getInitialState:function(){
+        return {
+            strings:"a,b,c,d,e,f,g",
+            activeNotes:"e,c,g"
+        }
+    },
     render: function() {
 
         return ( 
           <div id="application">
             {this.getDebugView()}
-            <Fretboard strings="a,b,c" activeNotes="c,e,g"/>
-            <h2> Default View </h2>
-            <Fretboard />
+            <Fretboard strings={ this.state.strings } activeNotes={ this.state.activeNotes }  />
+            
          </div>
         )
     },
@@ -34,7 +38,8 @@ var App = React.createClass({
     },
      
     _onChange: function () {
-        this.setState(getStateFromStores());
+       
+        this.setState( getStateFromStores() );
     }
 
 });
