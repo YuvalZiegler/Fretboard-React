@@ -21,7 +21,7 @@ var App = React.createClass({
         return {
             tonic: "e",
             strings:"a,b,c,d,e,f,g",
-            activeNotes:"e,c,g"
+            mode:"e,c,g"
         }
     },
     render: function() {

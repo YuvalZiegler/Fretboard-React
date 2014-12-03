@@ -40,22 +40,25 @@ var Fretboard = React.createClass({
   },
   getStrings: function () {
     var strings = [];
+
     // convert string to array if needed
     var stringsArray = this.stringToArray(this.props.strings)
-  console.log("getStrings :: stringsArray ::  ", stringsArray)
+    
     // convert active notes to chromas
     var activeNotes = this.stringToArray( this.props.activeNotes )
-    console.log("getStrings :: activeNotes ::  ", activeNotes)
+    // create an array of chromas for active note comparison
     var activeNotesChromas = activeNotes.map( function( noteName ) {
-
         return Teoria.note(noteName).chroma()
     })
-    console.log("getStrings :: activeNotesChromas ::  ", activeNotesChromas)
-    for (var index = stringsArray.length; index--;) {
 
+    var tonic = Teoria.note.fromString(activeNotes[0])
+    
+    // populate string array with FretboardString Component
+    for (var index = stringsArray.length; index--;) {
       strings.push(
           <FretboardString
               key = { "String_" + index   }
+              tonic = { tonic }
               note= { stringsArray[index] }
               activeNotes = { activeNotes }
               activeNotesChromas = { activeNotesChromas }
@@ -75,8 +78,11 @@ var Fretboard = React.createClass({
 
 var FretboardString = React.createClass({
   propTypes: {
-    note: React.PropTypes.string.isRequired
+    tonic: React.PropTypes.instanceOf(Teoria.TeoriaNote),
+    note: React.PropTypes.string.isRequired,
+    activeNotes: React.PropTypes.array
   },
+
   getFrets  : function (noteName) {
 
     var stringRoot = Teoria.note.fromString(noteName);
@@ -86,14 +92,18 @@ var FretboardString = React.createClass({
         return ( Teoria.note.fromFrequency( note.fq() ) ).note;
     });
   },
-
+  getIntervalName:function(note){
+    var interval = Teoria.interval(this.props.tonic, note)
+    console.log(interval)
+    return interval.base()
+  },
 
   getCssClasses    : function(note){
     var classes= "fret"
-
-    if ( this.props.activeNotesChromas &&  this.props.activeNotesChromas.indexOf( note.chroma() ) >= 0) {
+    
+    if ( this.props.activeNotesChromas &&  this.props.activeNotesChromas.indexOf( note.chroma() ) >= 0) { 
       
-      classes +=" active "
+      classes +=" active " + this.getIntervalName(note)
     }
 
     return classes;
