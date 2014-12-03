@@ -115,8 +115,11 @@ var FretboardString = React.createClass({
 
     return (
         <div>
-          <StringUI/>
-            { frets }
+           <StringUI/>
+          <div className="string">
+           
+              { frets }
+          </div>
         </div>
     )
   }
