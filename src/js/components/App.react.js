@@ -19,12 +19,13 @@ var App = React.createClass({
     },
     getInitialState:function(){
         return {
+            tonic: "e",
             strings:"a,b,c,d,e,f,g",
             activeNotes:"e,c,g"
         }
     },
     render: function() {
-
+        
         return ( 
           <div id="application">
             {this.getDebugView()}
@@ -38,7 +39,8 @@ var App = React.createClass({
     },
      
     _onChange: function () {
-       
+        console.log("_onChange Called on App Component")
+        console.log("getStateFromStores(): ", getStateFromStores() )
         this.setState( getStateFromStores() );
     }
 

@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var objectAssign = require('react/lib/Object.assign');
 var Teoria = require('Teoria');
 var CHANGE_EVENT = 'change';
-var ActionTypes = require('../constants/FretboardConstants').ActionTypes;
+var ActionTypes = require('../constants/AppConstants').ActionTypes;
 var _state = {};
 
 
@@ -28,52 +28,55 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
     return _state;
   },
   // maps chord or scale to a note array
-  getActiveNotes: function(data){
+  getActiveNotes: function(payload){
     var activeNotes = [];
-    var data = data || _state;
+    var payload = payload || _state;
     
-    switch(data.mode){
+    switch(payload.mode){
         case "chord":
-            activeNotes = Teoria.chord( data.tonic + data.name )
+            activeNotes = Teoria.chord( payload.tonic + payload.name )
                                 .notes()
-                                .map(function(note){ return note.name()});
+                                .map(function(note){ return note.name() + note.accidental()});
             break;
         case "scale":
-            activeNotes = Teoria.scale( data.tonic, data.name )
+            activeNotes = Teoria.scale( payload.tonic, payload.name )
                                 .notes()
-                                .map(function(note){ return note.name()});
+                                .map(function(note){ return note.name() + note.accidental()});
             break;
         default:
             activeNotes = [];
     }
-    console.log(activeNotes)
+    
     return activeNotes;
   }
 });
 
 
 FretboardStore.dispatchToken = AppDispatcher.register(function(payload) {
+  
+  console.log( ":: STORE :: ", payload.source, payload.action)
+
   var action = payload.action;
   
+  _state = objectAssign( _state, action.payload )
+  var activeNotes = FretboardStore.getActiveNotes()
   if (process.env.NODE_ENV == "development") console.log("Store:", action);
   
+
   switch(action.type) {
     case ActionTypes.RECEIVE_INITIAL_STATE:
-      _state = objectAssign( action.payload,
+      _state = objectAssign(_state,
                        { 
-                         loaded:true,
-                         activeNotes:FretboardStore.getActiveNotes(action.payload)
+                         activeNotes:activeNotes
                        });
       FretboardStore.emitChange();
       break;
 
     case ActionTypes.UPDATE_STATE:
-
-      _state = objectAssign( 
-        objectAssign( _state, action.payload ), 
-        {activeNotes: FretboardStore.getActiveNotes()} 
-      );
-      
+      _state = objectAssign( _state,
+                       { 
+                         activeNotes:activeNotes
+                       })
       FretboardStore.emitChange();
       break;
 

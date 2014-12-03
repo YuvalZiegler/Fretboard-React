@@ -9,7 +9,7 @@ $arsenic:         #40494D;
 $tornadoGray:     #647278;
 
 @function longTextShadow($color:$arsenic, $length:20) {
- 
+
   $result:1px 1px 1px rgba($color,1);
 
   @while $length > 0 {
@@ -18,7 +18,7 @@ $tornadoGray:     #647278;
   }
   @return $result
 }
-   
+
 
 * {
     box-sizing: border-box;
@@ -32,7 +32,7 @@ body{
     font-family: "Helvetica Neue"
 }
 
-#fretboard{
+.fretboard{
     position:relative;
     margin:2em 0;
     float:left;
@@ -44,15 +44,15 @@ body{
     border-top:5px solid;
     border-right:5px solid;
     border-bottom:5px solid;
-    
-    -moz-user-select: none; 
-    -khtml-user-select: none; 
-    -webkit-user-select: none; 
-    -o-user-select: none; 
-    user-select: none; 
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
-#fretboard .string{
+.fretboard .string{
     overflow: hidden;
     cursor: col-resize;
     border-bottom:1px solid;
@@ -60,19 +60,19 @@ body{
     width:100%;
     margin:0;
     padding:0;
-    
+
 }
 
 
-#fretboard .ui-wrapper{
+.fretboard .ui-wrapper{
     float:left;
     clear:left;
-    position: relative; 
-    text-align: center;   
+    position: relative;
+    text-align: center;
     top:3px;
 }
 
-#fretboard .ui-wrapper i{
+.fretboard .ui-wrapper i{
     position: absolute;
     cursor: pointer;
     left:-10px;
@@ -85,60 +85,60 @@ body{
     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
     line-height: 17px;
     cursor: pointer;
-    
+
 }
 
 
-#fretboard .ui-wrapper i.delete{
-   top:3px; 
+.fretboard .ui-wrapper i.delete{
+   top:3px;
    background: $cranberry;
    transform: rotate(45deg) scale(1);
    transition: transform, 200ms;
 }
 
-#fretboard .ui-wrapper i.add{
-   top:30px; 
+.fretboard .ui-wrapper i.add{
+   top:30px;
    background: $agingCilantro;
    transform: scale(1);
    transition: transform, 200ms;
 }
-#fretboard .ui-wrapper i.delete:hover{
+.fretboard .ui-wrapper i.delete:hover{
     transform: rotate(45deg) scale(1.2);
     transition: transform, 200ms;
-} 
-#fretboard .ui-wrapper i.add:hover{
+}
+.fretboard .ui-wrapper i.add:hover{
     transform: scale(1.2);
     transition: transform, 200ms;
 }
 
-#fretboard .fret-wrapper{
+.fretboard .fret-wrapper{
         float:left;
         width:8.333%;
         border-right:1px solid;
 }
-#fretboard .fret{
+.fretboard .fret{
     width: 100%;
     min-height:60px;
     float:left;
-    
-    position: relative; 
+
+    position: relative;
     overflow: hidden;
 }
 
-#fretboard .fret:first-of-type{
+.fretboard .fret:first-of-type{
   border-right-width:5px;
-  border-right-style: solid;  
+  border-right-style: solid;
 }
-#fretboard .fret:last-of-type{
-  
-  border-right-style: none;  
+.fretboard .fret:last-of-type{
+
+  border-right-style: none;
 }
 
-#fretboard .fret.active{
+.fretboard .fret.active{
     background: $tornadoGray;
 }
 
-#fretboard .note{
+.fretboard .note{
     cursor: pointer;
     text-align: center;
     position: absolute;
@@ -148,12 +148,12 @@ body{
     width:40px;
     height:40px;
     line-height:40px;
-    border-radius: 50%;    
+    border-radius: 50%;
     z-index: 1;
     color:#40494D;
 }
 
-#fretboard .fret.active > .note{
+.fretboard .fret.active > .note{
     color:$cream;
     background: $arsenic;
     span{
@@ -166,7 +166,7 @@ body{
     }
 }
 
-#fretboard .fret.active > .note:before{
+.fretboard .fret.active > .note:before{
     position: absolute;
     content: "";
     z-index: -1;
@@ -178,7 +178,7 @@ body{
     transform: rotate(45deg)
 }
 
-#fretboard .fret.active > .note:after{
+.fretboard .fret.active > .note:after{
     position: absolute;
     content: "";
     z-index: -1;
@@ -186,16 +186,16 @@ body{
     height:40px;
     border-radius: 50%;
     left:0;
-    background: $arsenic;  
+    background: $arsenic;
 }
 
-#fretboard .fret.unison > .note:after, 
-#fretboard .fret.octave > .note:after  { background: $cranberry;}
-#fretboard .fret.unison > .note span, 
-#fretboard .fret.octave > .note span   { text-shadow:longTextShadow( darken($cranberry, 10%));}
-#fretboard .fret.third > .note:after   { background: $skyBlue; }
-#fretboard .fret.third > .note span    { text-shadow:longTextShadow( darken($skyBlue, 10%)); }
-#fretboard .fret.fifth > .note:after   { background: $agingCilantro; }
-#fretboard .fret.fifth > .note span    { text-shadow: longTextShadow( darken($agingCilantro, 10%)); }
-#fretboard .fret.seventh > .note:after { background: $chineseEggplant; }
-#fretboard .fret.seventh > .note span  {  text-shadow: longTextShadow( darken($chineseEggplant, 10%)); }
+.fretboard .fret.unison > .note:after,
+.fretboard .fret.octave > .note:after  { background: $cranberry;}
+.fretboard .fret.unison > .note span,
+.fretboard .fret.octave > .note span   { text-shadow:longTextShadow( darken($cranberry, 10%));}
+.fretboard .fret.third > .note:after   { background: $skyBlue; }
+.fretboard .fret.third > .note span    { text-shadow:longTextShadow( darken($skyBlue, 10%)); }
+.fretboard .fret.fifth > .note:after   { background: $agingCilantro; }
+.fretboard .fret.fifth > .note span    { text-shadow: longTextShadow( darken($agingCilantro, 10%)); }
+.fretboard .fret.seventh > .note:after { background: $chineseEggplant; }
+.fretboard .fret.seventh > .note span  {  text-shadow: longTextShadow( darken($chineseEggplant, 10%)); }

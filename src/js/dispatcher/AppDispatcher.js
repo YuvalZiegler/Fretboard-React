@@ -1,6 +1,6 @@
-var FretboardConstants = require('../constants/FretboardConstants');
+var FretboardConstants = require('../constants/AppConstants');
 var Dispatcher = require('flux').Dispatcher;
-var PayloadSources = FretboardConstants.PayloadSources;
+var ActionSources = FretboardConstants.ActionSources;
 var objectAssign = require('react/lib/Object.assign');
 
 var AppDispatcher = objectAssign(new Dispatcher(), {
@@ -12,10 +12,10 @@ var AppDispatcher = objectAssign(new Dispatcher(), {
   handleServerAction: function(action) {
     
     var payload = {
-      source: PayloadSources.SERVER_ACTION,
+      source: ActionSources.SERVER_ACTION,
       action: action
     };
-    console.log("Dispatcher: " + payload.source , payload)
+    console.log(":: DISPATCHER :: " + payload.source + ": "  , payload.action)
     
     this.dispatch(payload);
     
@@ -27,10 +27,10 @@ var AppDispatcher = objectAssign(new Dispatcher(), {
    */
   handleViewAction: function(action) {
     var payload = {
-      source:  PayloadSources.VIEW_ACTION,
+      source:  ActionSources.VIEW_ACTION,
       action: action
     };
-    console.log("Dispatcher: " + payload.source , payload)
+    console.log(":: DISPATCHER :: " + payload.source + ": "  +  payload.action.type, payload.action.payload )
     this.dispatch(payload);
     
   }

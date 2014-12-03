@@ -1,5 +1,5 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var ActionTypes = require('../constants/FretboardConstants').ActionTypes;
+var ActionTypes = require('../constants/AppConstants').ActionTypes;
 
 var FretboardActions = {
 
