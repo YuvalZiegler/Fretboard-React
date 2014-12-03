@@ -9,6 +9,6 @@ React.render(
   document.getElementById('react')
 );
 
-FretboardStartingData.init();
-FretboardAPI.getState();
+// FretboardStartingData.init();
+// FretboardAPI.getState();
 

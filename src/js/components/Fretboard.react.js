@@ -4,7 +4,8 @@ var Actions = require('../actions/FretboardActions');
 var React = require('react/addons');
 var Teoria = require('Teoria');
 var ReactTransitionGroup = React.addons.TransitionGroup;
-
+var Utils = require('../utilities/FretboardUtilityFunctions')
+var _ = require('lodash');
 /*********************************
 //  FRETBOARD COMPONENT
 //  Properties:
@@ -20,17 +21,14 @@ var Fretboard = React.createClass({
         React.PropTypes.string,
         React.PropTypes.array
     ]),
-    activeNotes: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.array
-    ]),
+    name: React.PropTypes.string,
     display: React.PropTypes.oneOf(['notes', 'intervals'])
   },
 
   getDefaultProps: function(){
     return {
       strings:"e,a,d,g,b,e",
-      activeNotes:"c,e,g"
+      name:"C major"
     };
   },
 
@@ -38,33 +36,24 @@ var Fretboard = React.createClass({
   stringToArray:function(stringOrArray){
     return ( "string" != typeof stringOrArray ?  stringOrArray : (stringOrArray).split(",") );
   },
+  
   getStrings: function () {
     var strings = [];
 
     // convert string to array if needed
-    var stringsArray = this.stringToArray(this.props.strings)
-    
-    // convert active notes to chromas
-    var activeNotes = this.stringToArray( this.props.activeNotes )
-    // create an array of chromas for active note comparison
-    var activeNotesChromas = activeNotes.map( function( noteName ) {
-        return Teoria.note(noteName).chroma()
-    })
+    var stringsArray = Utils.stringToArray(this.props.strings);
+    var activeNotes =  Utils.parseScaleOrChord(this.props.name).notes();
 
-    var tonic = Teoria.note.fromString(activeNotes[0])
     
     // populate string array with FretboardString Component
     for (var index = stringsArray.length; index--;) {
       strings.push(
           <FretboardString
               key = { "String_" + index   }
-              tonic = { tonic }
-              note= { stringsArray[index] }
+              stringRoot  = { stringsArray[index] }
               activeNotes = { activeNotes }
-              activeNotesChromas = { activeNotesChromas }
           ></FretboardString>
       )
-
     }
 
     return strings;
@@ -75,12 +64,10 @@ var Fretboard = React.createClass({
     return <div className="fretboard">{ this.getStrings() }</div>
   },
 });
-
+/////////// STRING COMPONENT
 var FretboardString = React.createClass({
   propTypes: {
-    tonic: React.PropTypes.instanceOf(Teoria.TeoriaNote),
-    note: React.PropTypes.string.isRequired,
-    activeNotes: React.PropTypes.array
+    stringRoot: React.PropTypes.string.isRequired,
   },
 
   getFrets  : function (noteName) {
@@ -92,25 +79,28 @@ var FretboardString = React.createClass({
         return ( Teoria.note.fromFrequency( note.fq() ) ).note;
     });
   },
-  getIntervalName:function(note){
-    var interval = Teoria.interval(this.props.tonic, note)
-    console.log(interval)
-    return interval.base()
-  },
 
-  getCssClasses    : function(note){
+  noteIsActive:function(note){
+    
+    
+    return _.find( this.props.activeNotes, function(activeNote){
+      return activeNote.chroma() == note.chroma()
+    });
+  },
+  getCssClasses : function(note){
+    
     var classes= "fret"
     
-    if ( this.props.activeNotesChromas &&  this.props.activeNotesChromas.indexOf( note.chroma() ) >= 0) { 
-      
-      classes +=" active " + this.getIntervalName(note)
+    if ( this.noteIsActive(note) ){
+      classes +=" active " + Teoria.interval( this.props.activeNotes[0], note).base()
     }
 
     return classes;
   },
+
   render: function () {
 
-    var notes = this.getFrets(this.props.note)
+    var notes = this.getFrets(this.props.stringRoot)
     var frets = [];
 
     for (var i = -1, l = notes.length; l > ++i; )
@@ -135,6 +125,7 @@ var FretboardString = React.createClass({
   }
 });
 
+/////////// STRING UI
 var StringUI = React.createClass({
     render:function(){
         return (
@@ -145,7 +136,7 @@ var StringUI = React.createClass({
         )
     }
 });
-
+/////////// FRET COMPONENT
 var Fret = React.createClass({
   propTypes:{
     note:React.PropTypes.instanceOf(Teoria.TeoriaNote).isRequired

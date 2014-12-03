@@ -26,29 +26,8 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
 
   getState: function() {
     return _state;
-  },
-  // maps chord or scale to a note array
-  getActiveNotes: function(payload){
-    var activeNotes = [];
-    var payload = payload || _state;
-    
-    switch(payload.mode){
-        case "chord":
-            activeNotes = Teoria.chord( payload.tonic + payload.name )
-                                .notes()
-                                .map(function(note){ return note.name() + note.accidental()});
-            break;
-        case "scale":
-            activeNotes = Teoria.scale( payload.tonic, payload.name )
-                                .notes()
-                                .map(function(note){ return note.name() + note.accidental()});
-            break;
-        default:
-            activeNotes = [];
-    }
-    
-    return activeNotes;
   }
+
 });
 
 
@@ -59,24 +38,17 @@ FretboardStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
   
   _state = objectAssign( _state, action.payload )
-  var activeNotes = FretboardStore.getActiveNotes()
+  
+  
   if (process.env.NODE_ENV == "development") console.log("Store:", action);
   
 
   switch(action.type) {
     case ActionTypes.RECEIVE_INITIAL_STATE:
-      _state = objectAssign(_state,
-                       { 
-                         activeNotes:activeNotes
-                       });
       FretboardStore.emitChange();
       break;
 
     case ActionTypes.UPDATE_STATE:
-      _state = objectAssign( _state,
-                       { 
-                         activeNotes:activeNotes
-                       })
       FretboardStore.emitChange();
       break;
 

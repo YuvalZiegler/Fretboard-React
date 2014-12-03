@@ -3,10 +3,7 @@ module.exports = {
   init: function () {
 
     localStorage.setItem('fretboardConfig', JSON.stringify({
-          tonic: "c",
-          // mode: scale / chord
-          mode: "scale",
-          name: "dorian",
+          name: "cm7b5",         
           // display: name / interval
           display: "name",
           // string configuration from lowest to highest

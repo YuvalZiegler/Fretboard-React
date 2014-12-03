@@ -19,9 +19,8 @@ var App = React.createClass({
     },
     getInitialState:function(){
         return {
-            tonic: "e",
-            strings:"a,b,c,d,e,f,g",
-            mode:"e,c,g"
+            name   : "Cm7",
+            strings : "a,b,c,d,e,f,g"
         }
     },
     render: function() {
@@ -29,7 +28,8 @@ var App = React.createClass({
         return ( 
           <div id="application">
             {this.getDebugView()}
-            <Fretboard strings={ this.state.strings } activeNotes={ this.state.activeNotes }  />
+
+            <Fretboard strings={ this.state.strings } name={ this.state.name }  />
             
          </div>
         )
