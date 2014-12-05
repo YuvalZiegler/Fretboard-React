@@ -4,6 +4,7 @@ var objectAssign = require('react/lib/Object.assign');
 var Teoria = require('Teoria');
 var CHANGE_EVENT = 'change';
 var ActionTypes = require('../constants/AppConstants').ActionTypes;
+var Utils = require('../utilities/FretboardUtilityFunctions')
 var _state = {};
 
 
@@ -26,8 +27,13 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
 
   getState: function() {
     return _state;
-  }
+  },
+  update_root: function(payload){
+    var spacer = _state.name.indexOf(" ") > 0 ? " " : "";
+    var newName = payload.root + spacer +  Utils.extractSymbol(_state.name)
 
+    _state = objectAssign( _state, {name:newName} )
+  }
 });
 
 
@@ -37,24 +43,23 @@ FretboardStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   var action = payload.action;
   
-  _state = objectAssign( _state, action.payload )
-  
-  
   if (process.env.NODE_ENV == "development") console.log("Store:", action);
-  
 
   switch(action.type) {
+    case ActionTypes.UPDATE_ROOT:
+      FretboardStore.update_root(action.payload)
+      break
     case ActionTypes.RECEIVE_INITIAL_STATE:
-      FretboardStore.emitChange();
-      break;
-
     case ActionTypes.UPDATE_STATE:
+      _state = objectAssign( _state, action.payload )
       FretboardStore.emitChange();
       break;
 
     default:
       // do nothing
   }
+  
+  FretboardStore.emitChange();
 
 });
 

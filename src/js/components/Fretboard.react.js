@@ -3,8 +3,7 @@
 var Actions = require('../actions/FretboardActions');
 var React = require('react/addons');
 var Teoria = require('Teoria');
-var ReactTransitionGroup = React.addons.TransitionGroup;
-var Utils = require('../utilities/FretboardUtilityFunctions')
+var Utils = require('../utilities/FretboardUtilityFunctions');
 var _ = require('lodash');
 /*********************************
 //  FRETBOARD COMPONENT
@@ -41,9 +40,8 @@ var Fretboard = React.createClass({
     var strings = [];
 
     // convert string to array if needed
-    var stringsArray = Utils.stringToArray(this.props.strings);
-    var activeNotes =  Utils.parseScaleOrChord(this.props.name).notes();
-
+    var stringsArray            = Utils.stringToArray(this.props.strings);
+    var parsedNameScaleOrChord  = Utils.parseScaleOrChord(this.props.name)
     
     // populate string array with FretboardString Component
     for (var index = stringsArray.length; index--;) {
@@ -51,7 +49,8 @@ var Fretboard = React.createClass({
           <FretboardString
               key = { "String_" + index   }
               stringRoot  = { stringsArray[index] }
-              activeNotes = { activeNotes }
+              activeNotes = { parsedNameScaleOrChord.notes() }
+              intervals   = { parsedNameScaleOrChord.intervals || parsedNameScaleOrChord.scale  }
           ></FretboardString>
       )
     }
@@ -64,8 +63,9 @@ var Fretboard = React.createClass({
     return <div className="fretboard">{ this.getStrings() }</div>
   },
 });
-/////////// STRING COMPONENT
+/////////// FRETBOARD STRING COMPONENT
 var FretboardString = React.createClass({
+  
   propTypes: {
     stringRoot: React.PropTypes.string.isRequired,
   },
@@ -73,26 +73,31 @@ var FretboardString = React.createClass({
   getFrets  : function (noteName) {
 
     var stringRoot = Teoria.note.fromString(noteName);
-    var scale      = Teoria.scale(stringRoot, "chromatic");
+    var fretsList  = Teoria.scale(stringRoot, "chromatic");
 
-    return scale.notes().map(function(note){
+    return fretsList.notes().map(function(note){
         return ( Teoria.note.fromFrequency( note.fq() ) ).note;
     });
   },
 
   noteIsActive:function(note){
-    
-    
     return _.find( this.props.activeNotes, function(activeNote){
       return activeNote.chroma() == note.chroma()
     });
   },
+  getIntervalName:function(note){   
+    return this.props.intervals[ _.findIndex(this.props.activeNotes,function(activeNote){
+      return activeNote.chroma() === note.chroma();
+    }) ]
+
+  },
+
   getCssClasses : function(note){
     
     var classes= "fret"
     
-    if ( this.noteIsActive(note) ){
-      classes +=" active " + Teoria.interval( this.props.activeNotes[0], note).base()
+    if (this.noteIsActive(note)){
+      classes +=" active " + this.getIntervalName(note);
     }
 
     return classes;
@@ -117,7 +122,6 @@ var FretboardString = React.createClass({
         <div>
            <StringUI/>
           <div className="string">
-           
               { frets }
           </div>
         </div>
@@ -163,7 +167,7 @@ var Note = React.createClass({
     interval : React.PropTypes.string
   },
   _onClick:function(event, value){
-    Actions.updateState({ tonic: this.props.name })
+    Actions.updateRoot({ root: this.props.name })
   },
 
   render:function(){
@@ -178,3 +182,5 @@ var Note = React.createClass({
 })
 
 module.exports = Fretboard;
+
+

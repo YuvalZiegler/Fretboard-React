@@ -6,7 +6,8 @@ module.exports = {
   
   ActionTypes: keyMirror({
     RECEIVE_INITIAL_STATE: null,
-    UPDATE_STATE:null
+    UPDATE_STATE:null,
+    UPDATE_ROOT:null
   }),
 
   ActionSources: keyMirror({

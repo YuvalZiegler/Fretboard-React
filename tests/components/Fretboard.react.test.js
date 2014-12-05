@@ -7,12 +7,15 @@ describe('Fretboard', function() {
   var TestUtils = React.addons.TestUtils;
   var instance;
 
-  it('its should mount with no props', function() {
-    instance = TestUtils.renderIntoDocument(
+  it('it should mount with no props', function() {
+    inst = TestUtils.renderIntoDocument(
         <Fretbroad/>
     );
-    expect( instance.isMounted() ).to.equal( true );
+    expect( TestUtils.isElement(<Fretbroad/>) ).to.equal( true );
+    expect( TestUtils.isCompositeComponent(inst) ).to.equal( true );
+    expect( inst.isMounted() ).to.equal( true );
   });
   
   
 });
+

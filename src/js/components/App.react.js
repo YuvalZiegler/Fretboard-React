@@ -19,7 +19,7 @@ var App = React.createClass({
     },
     getInitialState:function(){
         return {
-            name   : "Cm7",
+            name   : "C major",
             strings : "a,b,c,d,e,f,g"
         }
     },
@@ -28,7 +28,6 @@ var App = React.createClass({
         return ( 
           <div id="application">
             {this.getDebugView()}
-
             <Fretboard strings={ this.state.strings } name={ this.state.name }  />
             
          </div>

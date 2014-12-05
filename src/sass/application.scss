@@ -112,17 +112,18 @@ body{
 }
 
 .fretboard .fret-wrapper{
-        float:left;
-        width:8.333%;
-        border-right:1px solid;
+    float:left;
+    width:8.333%;
+    border-right:1px solid;
 }
 .fretboard .fret{
     width: 100%;
     min-height:60px;
     float:left;
-
     position: relative;
     overflow: hidden;
+    background: white;
+    transition: background 1s;
 }
 
 .fretboard .fret:first-of-type{
@@ -135,6 +136,7 @@ body{
 }
 
 .fretboard .fret.active{
+    transition: background 1s;
     background: $tornadoGray;
 }
 
@@ -189,13 +191,17 @@ body{
     background: $arsenic;
 }
 
-.fretboard .fret.unison > .note:after,
-.fretboard .fret.octave > .note:after  { background: $cranberry;}
-.fretboard .fret.unison > .note span,
-.fretboard .fret.octave > .note span   { text-shadow:longTextShadow( darken($cranberry, 10%));}
-.fretboard .fret.third > .note:after   { background: $skyBlue; }
-.fretboard .fret.third > .note span    { text-shadow:longTextShadow( darken($skyBlue, 10%)); }
-.fretboard .fret.fifth > .note:after   { background: $agingCilantro; }
-.fretboard .fret.fifth > .note span    { text-shadow: longTextShadow( darken($agingCilantro, 10%)); }
-.fretboard .fret.seventh > .note:after { background: $chineseEggplant; }
-.fretboard .fret.seventh > .note span  {  text-shadow: longTextShadow( darken($chineseEggplant, 10%)); }
+.fretboard .fret.P1 > .note:after,
+.fretboard .fret.P1 > .note:after  { background: $cranberry;}
+.fretboard .fret.P1 > .note span,
+.fretboard .fret.P8 > .note span   { text-shadow:longTextShadow( darken($cranberry, 10%));}
+.fretboard .fret.m3 > .note:after,
+.fretboard .fret.M3 > .note:after   { background: $skyBlue; }
+.fretboard .fret.m3 > .note span,    
+.fretboard .fret.M3 > .note span    { text-shadow:longTextShadow( darken($skyBlue, 10%)); }
+.fretboard .fret.P5 > .note:after   { background: $agingCilantro; }
+.fretboard .fret.P5 > .note span    { text-shadow: longTextShadow( darken($agingCilantro, 10%)); }
+.fretboard .fret.m7 > .note:after,
+.fretboard .fret.M7 > .note:after { background: $chineseEggplant; }
+.fretboard .fret.m7 > .note span,
+.fretboard .fret.M7 > .note span  {  text-shadow: longTextShadow( darken($chineseEggplant, 10%)); }

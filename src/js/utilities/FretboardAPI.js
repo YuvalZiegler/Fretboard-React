@@ -7,7 +7,7 @@ module.exports = {
     var payload = JSON.parse(localStorage.getItem('fretboardConfig'));
     
     // simulate success callback
-    FretboardActions.consumeConfiguration(payload);
+    FretboardActions.recieveInitialState(payload);
   }
 
 };
