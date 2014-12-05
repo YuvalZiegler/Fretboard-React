@@ -131,15 +131,25 @@ var FretboardString = React.createClass({
 
 /////////// STRING UI
 var StringUI = React.createClass({
+    deleteString:function(){
+      console.log("••• deleteString •••")
+    },
+    addString:function(){
+      console.log("••• addString •••")
+      console.log(this)
+    },
     render:function(){
         return (
             <div className="ui-wrapper">
-                <i className="delete">+</i>
-                <i className="add">+</i>
+                <i className="delete" onClick={ this.deleteString } >+</i>
+                <i className="add"    onClick={ this.addString    } >+</i>
             </div>
         )
     }
 });
+
+
+
 /////////// FRET COMPONENT
 var Fret = React.createClass({
   propTypes:{
