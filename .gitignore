@@ -7,3 +7,4 @@ bundle.js
 node_modules/*
 todo.md
 build/
+build/app.js

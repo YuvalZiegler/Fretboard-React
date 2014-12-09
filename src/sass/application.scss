@@ -165,6 +165,7 @@ body{
         width: 100%;
         border-radius: 50%;
         text-shadow: longTextShadow(darken($arsenic,3%));
+         transition: text-shadow 1s;
     }
 }
 
@@ -189,19 +190,20 @@ body{
     border-radius: 50%;
     left:0;
     background: $arsenic;
+    transition: background 1s;
 }
 
 .fretboard .fret.P1 > .note:after,
-.fretboard .fret.P1 > .note:after  { background: $cranberry;}
+.fretboard .fret.P1 > .note:after  { background: $cranberry; transition: background 1s;}
 .fretboard .fret.P1 > .note span,
-.fretboard .fret.P8 > .note span   { text-shadow:longTextShadow( darken($cranberry, 10%));}
+.fretboard .fret.P8 > .note span   { text-shadow:longTextShadow( darken($cranberry, 10%));transition: text-shadow 1s;}
 .fretboard .fret.m3 > .note:after,
-.fretboard .fret.M3 > .note:after   { background: $skyBlue; }
+.fretboard .fret.M3 > .note:after   { background: $skyBlue;  transition: background 1s;}
 .fretboard .fret.m3 > .note span,    
-.fretboard .fret.M3 > .note span    { text-shadow:longTextShadow( darken($skyBlue, 10%)); }
-.fretboard .fret.P5 > .note:after   { background: $agingCilantro; }
-.fretboard .fret.P5 > .note span    { text-shadow: longTextShadow( darken($agingCilantro, 10%)); }
+.fretboard .fret.M3 > .note span    { text-shadow:longTextShadow( darken($skyBlue, 10%));transition: text-shadow 1s; }
+.fretboard .fret.P5 > .note:after   { background: $agingCilantro; transition: background 1s;}
+.fretboard .fret.P5 > .note span    { text-shadow: longTextShadow( darken($agingCilantro, 10%)); transition: text-shadow 1s;}
 .fretboard .fret.m7 > .note:after,
-.fretboard .fret.M7 > .note:after { background: $chineseEggplant; }
+.fretboard .fret.M7 > .note:after { background: $chineseEggplant; transition: background 1s;}
 .fretboard .fret.m7 > .note span,
-.fretboard .fret.M7 > .note span  {  text-shadow: longTextShadow( darken($chineseEggplant, 10%)); }
+.fretboard .fret.M7 > .note span  {  text-shadow: longTextShadow( darken($chineseEggplant, 10%)); transition: text-shadow 1s;}
