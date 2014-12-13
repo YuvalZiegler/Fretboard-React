@@ -15,8 +15,9 @@ var AppDispatcher = objectAssign(new Dispatcher(), {
       source: ActionSources.SERVER_ACTION,
       action: action
     };
-    console.log(":: DISPATCHER :: " + payload.source + ": "  , payload.action)
-    
+    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※")
+    console.log("❉  DISPATCHER :: " + payload.source + " :: "  + payload.action.type)
+    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※")
     this.dispatch(payload);
     
   },
@@ -30,7 +31,9 @@ var AppDispatcher = objectAssign(new Dispatcher(), {
       source:  ActionSources.VIEW_ACTION,
       action: action
     };
-    console.log(":: DISPATCHER :: " + payload.source + ": "  +  payload.action.type, payload.action.payload )
+    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※")
+    console.log("※  DISPATCHER :: " + payload.source + " :: "  + payload.action.type)
+    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※")
     this.dispatch(payload);
     
   }

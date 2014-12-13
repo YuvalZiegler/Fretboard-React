@@ -11,7 +11,6 @@ gulp.task('sass', ['images'], function () {
       bundleExec: true,
       sourcemapPath: '../sass'
     }))
-
     .on('error', handleErrors)
     .pipe(gulp.dest(config.dest));
 });

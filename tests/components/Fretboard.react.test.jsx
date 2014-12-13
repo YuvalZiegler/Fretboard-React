@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 
 describe('Fretboard', function() {
   var React = require('react/addons');
-  var Fretbroad = require('../../src/js/components/Fretboard.react.js');
+  var Fretbroad = require('../../src/js/components/Fretboard.react.jsx');
   var TestUtils = React.addons.TestUtils;
   var instance;
 

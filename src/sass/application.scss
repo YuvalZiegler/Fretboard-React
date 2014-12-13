@@ -8,6 +8,14 @@ $cream:           #FFFFCC;
 $arsenic:         #40494D;
 $tornadoGray:     #647278;
 
+
+.clearfix {
+  overflow: hidden;
+  *zoom: 1; 
+}
+
+
+
 @function longTextShadow($color:$arsenic, $length:20) {
 
   $result:1px 1px 1px rgba($color,1);
@@ -41,9 +49,8 @@ body{
     background: #FFFFFF;
     min-width: 600px;
     margin: 0 5%;
-    border-top:5px solid;
-    border-right:5px solid;
-    border-bottom:5px solid;
+    border:5px solid;
+
 
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -52,9 +59,15 @@ body{
     user-select: none;
 }
 
+/////////////
+// STRING 
+/////////////
+.fretboard .string-wrapper{
+   width:100%;
+   float:left; 
+}
 .fretboard .string{
     overflow: hidden;
-    
     border-bottom:1px solid;
     float:left;
     width:100%;
@@ -63,58 +76,80 @@ body{
 
 }
 
-
-.fretboard .ui-wrapper{
+.fretboard .string-ui-wrapper-anchor{
     float:left;
     clear:left;
+    top:0px;
+    left:0; 
     position: relative;
-    text-align: center;
-    top:3px;
+    transition:left 500ms;
 }
 
-.fretboard .ui-wrapper i{
+.fretboard .string-wrapper.show-ui .string-ui-wrapper-anchor{
+    left:-50px; 
+    transition:left 500ms 500ms;
+}
+
+.fretboard .string-ui-wrapper{
+ 
+    position: absolute;
+    background: $tornadoGray;
+    width: 50px;
+    height: 60px;
+    border-radius: 50% 0 0 50%;
+    border:{
+        top:5px solid;
+        left:5px solid;
+        bottom:5px solid;
+    }
+
+}
+.fretboard .string-ui-icon-anchor {
+    top: 0px;
+    left: 2px;
+    position: relative;
+    
+}
+.fretboard .string-ui-wrapper i{
     position: absolute;
     cursor: pointer;
-    left:-10px;
-    width:20px;
+    color:$schoolBus !important;
+    width:10px;
     height: 20px;
     z-index: 1;
     border-radius: 50%;
     color: white;
     font-style: normal;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
     line-height: 17px;
     cursor: pointer;
-
-}
-
-
-.fretboard .ui-wrapper i.delete{
-   top:3px;
-   background: $cranberry;
-   transform: rotate(45deg) scale(1);
-   transition: transform, 200ms;
-}
-
-.fretboard .ui-wrapper i.add{
-   top:30px;
-   background: $agingCilantro;
-   transform: scale(1);
-   transition: transform, 200ms;
-}
-.fretboard .ui-wrapper i.delete:hover{
-    transform: rotate(45deg) scale(1.2);
+    transform: scale(1);
     transition: transform, 200ms;
+    
+    &:hover{
+        transform: scale(1.5);
+        transition: transform, 200ms;
+    }
+
+    // Delete Button
+    &.delete { top:2px; left:17px; }
+    // Add Button
+    &.add { top:30px; left:17px; }
+    // Tune Down Button
+    &.tune-down { top:17px; left:8px;}
+    // Tune Up Button
+    &.tune-up { top:17px; right:8px;  }
+
 }
-.fretboard .ui-wrapper i.add:hover{
-    transform: scale(1.2);
-    transition: transform, 200ms;
-}
+
+/////////////
+// Fret
+/////////////
 
 .fretboard .fret-wrapper{
     float:left;
     width:8.333%;
     border-right:1px solid;
+
 }
 .fretboard .fret{
     width: 100%;
@@ -124,6 +159,7 @@ body{
     overflow: hidden;
     background: white;
     transition: background 1s;
+    z-index: 1;
 }
 
 .fretboard .fret:first-of-type{

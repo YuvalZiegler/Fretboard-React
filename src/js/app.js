@@ -1,4 +1,4 @@
-var App = require('./components/App.react');
+var App = require('./components/App.react.jsx');
 var FretboardStartingData = require('./fixtures/FretboardStartingData');
 var FretboardAPI = require('./utilities/FretboardAPI');
 

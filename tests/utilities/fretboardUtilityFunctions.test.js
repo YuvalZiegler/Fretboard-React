@@ -76,6 +76,21 @@ describe('FretboardUtilities', function() {
       expect( parseScaleOrChord("c# dorian") ).to.eql( Teoria.scale("C#","dorian") )
     })
 
+  });
+
+  describe('createImmutableDataMap',function(){
+    
+    var stringArray =   ["e","a","d","g"]; 
+    var parsedScaleOrChord = Utils.parseScaleOrChord("c")
+    var createImmutableDataMap = Utils.createImmutableDataMap;
+
+
+    it('should show me the money', function(){
+      expect( createImmutableDataMap( stringArray , parsedScaleOrChord ) )
+      .to.eql( false )
+
+    })
+
   })
 
 });

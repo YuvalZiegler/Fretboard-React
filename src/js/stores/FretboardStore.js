@@ -1,7 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var objectAssign = require('react/lib/Object.assign');
-var Teoria = require('Teoria');
 var CHANGE_EVENT = 'change';
 var ActionTypes = require('../constants/AppConstants').ActionTypes;
 var Utils = require('../utilities/FretboardUtilityFunctions')
@@ -28,10 +27,10 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
   getState: function() {
     return _state;
   },
+  
   update_root: function(payload){
     var spacer = _state.name.indexOf(" ") > 0 ? " " : "";
     var newName = payload.root + spacer +  Utils.extractSymbol(_state.name)
-
     _state = objectAssign( _state, {name:newName} )
   }
 });
@@ -39,12 +38,12 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
 
 FretboardStore.dispatchToken = AppDispatcher.register(function(payload) {
   
-  console.log( ":: STORE :: ", payload.source, payload.action)
-
+  console.log("❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤")
+  console.log("❤ ︎ STORE      :: " +  payload.source + " :: " + payload.action.type)
+  console.log("❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤")
+  
   var action = payload.action;
   
-  if (process.env.NODE_ENV == "development") console.log("Store:", action);
-
   switch(action.type) {
     case ActionTypes.UPDATE_ROOT:
       FretboardStore.update_root(action.payload)

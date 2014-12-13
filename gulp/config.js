@@ -11,6 +11,7 @@ module.exports = {
       // for sass sourcemap linking
       baseDir: [dest, src, test, mocha]
     },
+    browser: "google chrome canary",
     files: [
       dest + "/**",
       test + "/**",

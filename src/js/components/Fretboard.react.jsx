@@ -1,10 +1,18 @@
-'use strict'
+///////////////////////////////////
+// TODO: 
+// - numberOfFrets 
+// - display Intervals
+// - delete add retune string
+// - Immutable map
+////////////////////////////////////
+
 
 var Actions = require('../actions/FretboardActions');
 var React = require('react/addons');
 var Teoria = require('Teoria');
 var Utils = require('../utilities/FretboardUtilityFunctions');
 var _ = require('lodash');
+
 /*********************************
 //  FRETBOARD COMPONENT
 //  Properties:
@@ -21,13 +29,15 @@ var Fretboard = React.createClass({
         React.PropTypes.array
     ]),
     name: React.PropTypes.string,
-    display: React.PropTypes.oneOf(['notes', 'intervals'])
+    display: React.PropTypes.oneOf(['notes', 'intervals']),
+    numberOfFrets:React.PropTypes.number
   },
 
   getDefaultProps: function(){
     return {
       strings:"e,a,d,g,b,e",
-      name:"C major"
+      name:"C major",
+      numberOfFrets:11
     };
   },
 
@@ -35,22 +45,27 @@ var Fretboard = React.createClass({
   stringToArray:function(stringOrArray){
     return ( "string" != typeof stringOrArray ?  stringOrArray : (stringOrArray).split(",") );
   },
-  
+
   getStrings: function () {
     var strings = [];
 
     // convert string to array if needed
-    var stringsArray            = Utils.stringToArray(this.props.strings);
-    var parsedNameScaleOrChord  = Utils.parseScaleOrChord(this.props.name)
+    var stringRootsArray        = Utils.stringToArray(this.props.strings); 
+    // convert string to array if needed
+    var parsedScaleOrChord  = Utils.parseScaleOrChord(this.props.name)
+
+    var dataMap = Utils.createImmutableDataMap( stringRootsArray, parsedScaleOrChord )    
     
-    // populate string array with FretboardString Component
-    for (var index = stringsArray.length; index--;) {
+
+    // Populate string array with FretboardString Component
+
+    for (var index = stringRootsArray.length; index--;) {
       strings.push(
           <FretboardString
               key = { "String_" + index   }
-              stringRoot  = { stringsArray[index] }
-              activeNotes = { parsedNameScaleOrChord.notes() }
-              intervals   = { parsedNameScaleOrChord.intervals || parsedNameScaleOrChord.scale  }
+              stringRoot  = { stringRootsArray[index] }
+              activeNotes = { parsedScaleOrChord.notes() }
+              intervals   = { parsedScaleOrChord.intervals || parsedScaleOrChord.scale  }
           ></FretboardString>
       )
     }
@@ -63,16 +78,26 @@ var Fretboard = React.createClass({
     return <div className="fretboard">{ this.getStrings() }</div>
   },
 });
-/////////// FRETBOARD STRING COMPONENT
+
+////////////////////////////////////////////////////////////////////////////////
+/////////// FRETBOARD STRING COMPONENT  
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 var FretboardString = React.createClass({
   
   propTypes: {
     stringRoot: React.PropTypes.string.isRequired,
   },
+  getInitialState:function(){
+    return {
+      stringUIState:""
+    }
+  },
+  getFrets  : function () {
 
-  getFrets  : function (noteName) {
-
-    var stringRoot = Teoria.note.fromString(noteName);
+    var stringRoot = Teoria.note.fromString(this.props.stringRoot);
     var fretsList  = Teoria.scale(stringRoot, "chromatic");
 
     return fretsList.notes().map(function(note){
@@ -102,10 +127,15 @@ var FretboardString = React.createClass({
 
     return classes;
   },
-
+  _openStringUI:function(){
+      this.setState({stringUIState:"show-ui"});
+  },
+  _closeStringUI:function(){
+    this.setState({stringUIState:""});
+  },
   render: function () {
 
-    var notes = this.getFrets(this.props.stringRoot)
+    var notes = this.getFrets()
     var frets = [];
 
     for (var i = -1, l = notes.length; l > ++i; )
@@ -119,31 +149,46 @@ var FretboardString = React.createClass({
       );
 
     return (
-        <div>
-           <StringUI/>
-          <div className="string">
+        <div  className={"string-wrapper " + this.state.stringUIState }  
+              onMouseEnter={ this._openStringUI } 
+              onMouseLeave={ this._closeStringUI} >
+          <StringUI/> 
+          <div className="string" >
               { frets }
           </div>
+          
         </div>
     )
   }
 });
 
-/////////// STRING UI
+/////////////////////////////////////////////////////////////////////////////
+/////////// STRING UI ///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 var StringUI = React.createClass({
-    deleteString:function(){
-      console.log("••• deleteString •••")
+    removeString:function(){
+      console.log("••• removeString •••",arguments)
     },
     addString:function(){
-      console.log("••• addString •••")
-      console.log(this)
+      console.log("••• addString •••",arguments)
+      
+    },
+    retuneString:function(){
+        console.log("••• retuneString •••",arguments );
     },
     render:function(){
         return (
-            <div className="ui-wrapper">
-                <i className="delete" onClick={ this.deleteString } >+</i>
-                <i className="add"    onClick={ this.addString    } >+</i>
+          <div className="string-ui-wrapper-anchor">
+            <div className="string-ui-wrapper">
+                <div className="string-ui-icon-anchor">
+                  <i className="delete"     onClick={ this.removeString     }   >x</i>
+                  <i className="add"        onClick={ this.addString        }   >+</i>
+                  <i className="tune-down"  onClick={ this.retuneString.bind(this, -1) }   >«</i>
+                  <i className="tune-up"    onClick={ this.retuneString.bind(this,  1) }   >»</i>
+                </div>
             </div>
+          </div>
         )
     }
 });
@@ -181,6 +226,7 @@ var Note = React.createClass({
   },
 
   render:function(){
+    
      return(
       <div className="note" onClick={ this._onClick }>
         <span >
@@ -192,5 +238,6 @@ var Note = React.createClass({
 })
 
 module.exports = Fretboard;
+
 
 

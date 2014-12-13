@@ -28,7 +28,41 @@ Utils = {
     
     return name.indexOf(" ") > 0  ? Teoria.scale(root, symbol) : Teoria.chord(root + symbol) 
      
-  }
+  },
+  
+  ////////////////////////////////////////////////////////////////////////////////
+  //////////
+  //////////
+  //////////    TODO: CREATE IMMUTABLE OBJECT WITH COMPLETE GRID DATA (???)
+  //////////
+  //////////
+  ////////////////////////////////////////////////////////////////////////////////
+
+  createImmutableDataMap:function(stringRootsArray, parsedScaleOrChord ){
+      
+    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿")
+    console.log("✿ createImmutableDataMap ✿ ")
+    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿")
+
+    // // Array of strings
+    // [  
+    //     // Array of notes sorted by string root 
+    //    [
+    //       {name:"c",  interval:"P"       },
+    //       {name:"c#", interval:undefined },
+    //       {name:"d",  interval:undefined },
+    //       {name:"d#", interval:undefined },
+    //       {name:"e",  interval:"M3"      },
+    //       {name:"f",  interval:undefined },
+    //       {name:"f#", interval:undefined },
+    //       {name:"g",  interval:"P5"      },
+    //       ...
+    //    ],
+    //    [...]
+    // ]
+
+    return "No implementation"
+  },
 }
 
 module.exports = Utils
