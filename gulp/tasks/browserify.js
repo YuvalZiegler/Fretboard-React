@@ -20,6 +20,7 @@ require('reactify');
 require('browserify-shim');
 require('stripify');
 require('envify');
+require('uglifyify');
 
 
 gulp.task('browserify', function(callback) {
@@ -46,6 +47,13 @@ gulp.task('browserify', function(callback) {
 
       if ("development" !== process.env.NODE_ENV){
         bundler.transform('stripify')
+        bundler.transform({
+          global:true,
+          dead_code:true,
+          mangle:true,
+          evaluate:true,
+          join_vars:true
+        }, 'uglifyify')
       }
       return bundler
         .bundle()

@@ -6,7 +6,6 @@
 // - Immutable map
 ////////////////////////////////////
 
-
 var Actions = require('../actions/FretboardActions');
 var React = require('react/addons');
 var Teoria = require('Teoria');
@@ -53,8 +52,8 @@ var Fretboard = React.createClass({
     var stringRootsArray        = Utils.stringToArray(this.props.strings); 
     // convert string to array if needed
     var parsedScaleOrChord  = Utils.parseScaleOrChord(this.props.name)
-
-    var dataMap = Utils.createImmutableDataMap( stringRootsArray, parsedScaleOrChord )    
+    
+    // var dataMap = Utils.createImmutableDataMap( stringRootsArray, parsedScaleOrChord )    
     
 
     // Populate string array with FretboardString Component

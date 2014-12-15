@@ -1,5 +1,7 @@
 var expect = require('chai').expect;
 var Teoria = require('Teoria')
+var Immutable =  require('Immutable');
+
 
 describe('FretboardUtilities', function() {
   
@@ -78,18 +80,45 @@ describe('FretboardUtilities', function() {
 
   });
 
-  describe('createImmutableDataMap',function(){
+  describe('Immutable Data tests',function(){
     
     var stringArray =   ["e","a","d","g"]; 
-    var parsedScaleOrChord = Utils.parseScaleOrChord("c")
-    var createImmutableDataMap = Utils.createImmutableDataMap;
+    var cMajorScale = Utils.parseScaleOrChord("c major")
+    var cChord = Utils.parseScaleOrChord("c")
+    var fretboardMap; 
+    
+    describe('_mapActiveNotes',function(){
+        it('should return an Immutable.List of active notes', function(){
+          expect( cMajorScale.notes().length).to.equal(Utils._mapActiveNotes( cMajorScale ).size)
+          expect( cChord.notes().length).to.equal(Utils._mapActiveNotes( cChord).size)
+          
+          
+        })
 
-
-    it('should show me the money', function(){
-      expect( createImmutableDataMap( stringArray , parsedScaleOrChord ) )
-      .to.eql( false )
-
+    });
+    describe('_getIntervalByChroma',function(){
+        it('return interval name by chroma if found', function(){
+          var activeNotes  = Utils._mapActiveNotes( cChord)
+          expect(Utils._getIntervalByChroma(activeNotes,0)).to.equal("P1")
+          expect(Utils._getIntervalByChroma(activeNotes,7)).to.equal("P5")
+        })
+        it('return undefined if not found', function(){
+          var activeNotes  = Utils._mapActiveNotes( cChord)
+          expect(Utils._getIntervalByChroma(activeNotes,1)).to.equal(undefined)
+        })
+    });
+    describe('createImmutableDataMap',function(){
+      var data = Utils.createImmutableDataMap( stringArray , cMajorScale )
+      it('data should be defined', function(){
+        expect(data).to.be.defined
+        console.log(data.toJS())
+      })
+      
+     
+   
     })
+
+
 
   })
 

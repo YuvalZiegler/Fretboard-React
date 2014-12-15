@@ -2,14 +2,15 @@
 var dest = './build';
 var src  = './src';
 var test = './tests'
-var mocha = './node_modules/mocha/'
+
+
 
 module.exports = {
   browserSync: {
     server: {
       // We're serving the src folder as well
       // for sass sourcemap linking
-      baseDir: [dest, src, test, mocha]
+      baseDir: [dest, src, test]
     },
     browser: "google chrome canary",
     files: [
@@ -32,8 +33,9 @@ module.exports = {
     dest: dest
   },
   test: {
-    src: test + "/test-bundle.js",
-    runInBrowser:true
+    src:  "tests/test-bundle.js",
+    reporter: "spec",
+    runInBrowser:true 
   },
   browserify: {
     // Enable source maps
