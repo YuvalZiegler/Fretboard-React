@@ -19,7 +19,7 @@ var _ = require('lodash');
 //  activeNotes ( Array / String ) :  ["c","e","g"] or "c,e,f,g,a,b,c"
 //  display ('notes','intervals')
 **********************************/
-
+var _state;
 var Fretboard = React.createClass({
 
   propTypes:{
@@ -46,35 +46,15 @@ var Fretboard = React.createClass({
   },
 
   getStrings: function () {
-    var strings = [];
-
-    // convert string to array if needed
-    var stringRootsArray        = Utils.stringToArray(this.props.strings); 
-    // convert string to array if needed
-    var parsedScaleOrChord  = Utils.parseScaleOrChord(this.props.name)
-    
-    // var dataMap = Utils.createImmutableDataMap( stringRootsArray, parsedScaleOrChord )    
-    
-
-    // Populate string array with FretboardString Component
-
-    for (var index = stringRootsArray.length; index--;) {
-      strings.push(
-          <FretboardString
-              key = { "String_" + index   }
-              stringRoot  = { stringRootsArray[index] }
-              activeNotes = { parsedScaleOrChord.notes() }
-              intervals   = { parsedScaleOrChord.intervals || parsedScaleOrChord.scale  }
-          ></FretboardString>
-      )
-    }
-
-    return strings;
+    return _state.map(function(frets,index){ 
+      return ( <FretboardString key={"string-"+index} frets={ frets }/> )}
+    )
   },
 
   render: function () {
-
-    return <div className="fretboard">{ this.getStrings() }</div>
+    _state = Utils.createImmutableDataMap( Utils.stringToArray(this.props.strings), Utils.parseScaleOrChord( this.props.name) )
+       
+    return <div className="fretboard">{ this.getStrings().toJS() }</div>
   },
 });
 
@@ -87,76 +67,31 @@ var Fretboard = React.createClass({
 var FretboardString = React.createClass({
   
   propTypes: {
-    stringRoot: React.PropTypes.string.isRequired,
-  },
-  getInitialState:function(){
-    return {
-      stringUIState:""
-    }
-  },
-  getFrets  : function () {
-
-    var stringRoot = Teoria.note.fromString(this.props.stringRoot);
-    var fretsList  = Teoria.scale(stringRoot, "chromatic");
-
-    return fretsList.notes().map(function(note){
-        return ( Teoria.note.fromFrequency( note.fq() ) ).note;
-    });
+    frets: React.PropTypes.array.isRequired,
   },
 
-  noteIsActive:function(note){
-    return _.find( this.props.activeNotes, function(activeNote){
-      return activeNote.chroma() == note.chroma()
-    });
-  },
-  getIntervalName:function(note){   
-    return this.props.intervals[ _.findIndex(this.props.activeNotes,function(activeNote){
-      return activeNote.chroma() === note.chroma();
-    }) ]
-
-  },
-
-  getCssClasses : function(note){
-    
-    var classes= "fret"
-    
-    if (this.noteIsActive(note)){
-      classes +=" active " + this.getIntervalName(note);
-    }
-
-    return classes;
-  },
   _openStringUI:function(){
-      this.setState({stringUIState:"show-ui"});
+     // this.setState({stringUIState:"show-ui"});
   },
   _closeStringUI:function(){
-    this.setState({stringUIState:""});
+    //this.setState({stringUIState:""});
   },
   render: function () {
-
-    var notes = this.getFrets()
-    var frets = [];
-
-    for (var i = -1, l = notes.length; l > ++i; )
-
-      frets.push(
-              <Fret
-                key     = { notes[i].chroma() }
-                chroma  = { notes[i].chroma() }
-                note    = { notes[i] }
-                classes = { this.getCssClasses( notes[i] ) } />
-      );
-
+    
     return (
-        <div  className={"string-wrapper " + this.state.stringUIState }  
-              onMouseEnter={ this._openStringUI } 
-              onMouseLeave={ this._closeStringUI} >
-          <StringUI/> 
+    
           <div className="string" >
-              { frets }
+              { 
+              this.props.frets.map(function(fret, index){
+               return (<Fret 
+                          key={"fret-"+index} 
+                          chroma={fret.chroma}
+                          interval={fret.interval}
+                          noteName={fret.name}/>)
+              }) 
+            }
           </div>
           
-        </div>
     )
   }
 });
@@ -196,18 +131,13 @@ var StringUI = React.createClass({
 
 /////////// FRET COMPONENT
 var Fret = React.createClass({
-  propTypes:{
-    note:React.PropTypes.instanceOf(Teoria.TeoriaNote).isRequired
-  },
 
   render: function() {
-
-    var noteName =  ( this.props.note.name() ).toUpperCase() + this.props.note.accidental();
-
+    
     return (
      <div className="fret-wrapper">
-        <div className={ this.props.classes } data-note-id={ this.props.chroma } >
-          <Note  name={ noteName } />
+        <div className={ "fret " + ( this.props.interval ? " active " + this.props.interval  : "")} data-note-id={ this.props.chroma } >
+          <Note noteName={ this.props.noteName } />
         </div>
      </div>
     )
@@ -216,12 +146,12 @@ var Fret = React.createClass({
 
 var Note = React.createClass({
   propTypes:{
-    name     : React.PropTypes.string.isRequired,
+    noteName : React.PropTypes.string.isRequired,
     active   : React.PropTypes.bool,
     interval : React.PropTypes.string
   },
   _onClick:function(event, value){
-    Actions.updateRoot({ root: this.props.name })
+    Actions.updateRoot({ root: this.props.noteName })
   },
 
   render:function(){
@@ -229,12 +159,18 @@ var Note = React.createClass({
      return(
       <div className="note" onClick={ this._onClick }>
         <span >
-          { this.props.name }
+          { this.props.noteName }
         </span>
         </div>
       )
   }
 })
+
+// Attaching classes to the module export for test?
+Fretboard.FretboardString = FretboardString;
+Fretboard.StringUI        = StringUI;
+Fretboard.Fret            = Fret;
+Fretboard.Note            = Note;
 
 module.exports = Fretboard;
 
