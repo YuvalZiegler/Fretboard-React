@@ -30,7 +30,7 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
   
   update_root: function(payload){
     var spacer = _state.name.indexOf(" ") > 0 ? " " : "";
-    var newName = payload.root + spacer +  Utils.extractSymbol(_state.name)
+    var newName = Utils.extractRoot(payload.root) + spacer +  Utils.extractSymbol(_state.name)
     _state = objectAssign( _state, {name:newName} )
   }
 });

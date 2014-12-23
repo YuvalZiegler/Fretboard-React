@@ -7,7 +7,7 @@ module.exports = {
           // display: name / interval
           display: "name",
           // string configuration from lowest to highest
-          strings:"e,a,d,g,b,e"
+          strings:"c,c#,d,d#,e,f,f#,g,g#,a,a#,b"
         })
     )
   }

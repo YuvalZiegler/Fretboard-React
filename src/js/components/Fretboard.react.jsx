@@ -137,7 +137,7 @@ var Fret = React.createClass({
     return (
      <div className="fret-wrapper">
         <div className={ "fret " + ( this.props.interval ? " active " + this.props.interval  : "")} data-note-id={ this.props.chroma } >
-          <Note noteName={ this.props.noteName } />
+          <Note noteName={ this.props.noteName } chroma={this.props.chroma } />
         </div>
      </div>
     )

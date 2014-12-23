@@ -2,22 +2,22 @@
 var Teoria = require('Teoria')
 var Immutable = require('Immutable');
 
-if(window){
-  window.Immutable = Immutable;
-  window.Teoria    = Teoria;
-}
 
 var _ = require ('lodash')
+
 Utils = {
+  chromaticScale: ['C','C#/Db','D','D#/Eb','E','F','F#/Gb', 'G', 'G#/Ab', 'A','A#/Bb','B'],
+  
   stringToArray:function(stringOrArray){
     return ( "string" != typeof stringOrArray ?  stringOrArray : (stringOrArray).split(",") );
   },
+  
   extractRoot:function(name){
     var root = name.charAt(0).toUpperCase();
     if (name.charAt(1) == "#" || name.charAt(1) == "b") root+=name.charAt(1) 
     return root
-    
   },
+  
   extractSymbol:function(name){
     var index = 1;
     if (name.charAt(index) == "#" || name.charAt(index) == "b"){
@@ -39,13 +39,6 @@ Utils = {
      
   },
 
-  ////////////////////////////////////////////////////////////////////////////////
-  //////////
-  //////////
-  //////////    TODO: CREATE IMMUTABLE OBJECT WITH COMPLETE GRID DATA (???)
-  //////////
-  //////////
-  ////////////////////////////////////////////////////////////////////////////////
   _mapActiveNotes:function(parsedScaleOrChord){
     
       var activeNotes =  parsedScaleOrChord
@@ -72,44 +65,26 @@ Utils = {
     return note ? note.interval : undefined
   },
   _mapNote:function (activeNotes, note) {
+    
     var _chroma =  note.chroma();
+    var noteName = this.chromaticScale[_chroma]
+  
     return {
-      name    : note.toString(true),
+      name    : noteName,
       chroma  : _chroma,
       interval: this._getIntervalByChroma(activeNotes,_chroma)
     }
   },
   _getChromaticScale:function (activeNotes, stringRoot) {
     
-    return (Teoria.scale(stringRoot , "chromatic" ).notes()).map(this._mapNote.bind(this,activeNotes))
+    return Teoria.scale(stringRoot , "chromatic" ).notes().map(this._mapNote.bind(this,activeNotes))
   },
   createImmutableDataMap:function(stringRootsArray, parsedScaleOrChord ){
       
-    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿")
-    console.log("✿ createImmutableDataMap ✿")
-    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿✿")
-    
-    // Data Structure
-    // // Array of strings
-    // [  
-    //     // Array of notes sorted by string root 
-    //    [
-    //       {name:"c",  chroma:0 ,interval:"P1"       },
-    //       {name:"c#", chroma:1 ,interval:undefined },
-    //       {name:"d",  chroma:2 ,interval:undefined },
-    //       {name:"d#", chroma:3 ,interval:undefined },
-    //       {name:"e",  chroma:4 ,interval:"M3"      },
-    //       {name:"f",  chroma:5 ,interval:undefined },
-    //       {name:"f#", chroma:6 ,interval:undefined },
-    //       {name:"g",  chroma:7 ,interval:"P5"      },
-    //       ...
-    //    ],
-    //    [...]
-    // ]  
-
+  
     var activeNotes = this._mapActiveNotes( parsedScaleOrChord )
        
-    var fretboardMap = Immutable.List( stringRootsArray ).map(this._getChromaticScale.bind( this, activeNotes) ) 
+    var fretboardMap = Immutable.List( stringRootsArray ).reverse().map( this._getChromaticScale.bind( this, activeNotes) ) 
     
     return fretboardMap
   },
