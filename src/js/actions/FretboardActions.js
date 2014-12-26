@@ -1,3 +1,5 @@
+'use strict';
+
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ActionTypes = require('../constants/AppConstants').ActionTypes;
 
@@ -18,7 +20,7 @@ var FretboardActions = {
     AppDispatcher.handleViewAction({
       type: ActionTypes.UPDATE_ROOT,
       payload: payload
-    })
+    });
   }
 
 

@@ -1,11 +1,12 @@
+'use strict';
+
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var objectAssign = require('react/lib/Object.assign');
 var CHANGE_EVENT = 'change';
 var ActionTypes = require('../constants/AppConstants').ActionTypes;
-var Utils = require('../utilities/FretboardUtilityFunctions')
+var Utils = require('../utilities/FretboardUtilityFunctions');
 var _state = {};
-
 
 var FretboardStore = objectAssign(EventEmitter.prototype, {
 
@@ -30,27 +31,27 @@ var FretboardStore = objectAssign(EventEmitter.prototype, {
   
   update_root: function(payload){
     var spacer = _state.name.indexOf(" ") > 0 ? " " : "";
-    var newName = Utils.extractRoot(payload.root) + spacer +  Utils.extractSymbol(_state.name)
-    _state = objectAssign( _state, {name:newName} )
+    var newName = Utils.extractRoot(payload.root) + spacer +  Utils.extractSymbol(_state.name);
+    _state = objectAssign( _state, {name:newName} );
   }
 });
 
 
 FretboardStore.dispatchToken = AppDispatcher.register(function(payload) {
   
-  console.log("❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤")
-  console.log("❤ ︎ STORE      :: " +  payload.source + " :: " + payload.action.type)
-  console.log("❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤")
+  console.log("❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤");
+  console.log("❤ ︎ STORE      :: " +  payload.source + " :: " + payload.action.type);
+  console.log("❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤");
   
   var action = payload.action;
   
   switch(action.type) {
     case ActionTypes.UPDATE_ROOT:
-      FretboardStore.update_root(action.payload)
-      break
+      FretboardStore.update_root(action.payload);
+      break;
     case ActionTypes.RECEIVE_INITIAL_STATE:
     case ActionTypes.UPDATE_STATE:
-      _state = objectAssign( _state, action.payload )
+      _state = objectAssign( _state, action.payload );
       FretboardStore.emitChange();
       break;
 

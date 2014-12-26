@@ -1,3 +1,5 @@
+'use strict';
+
 var FretboardConstants = require('../constants/AppConstants');
 var Dispatcher = require('flux').Dispatcher;
 var ActionSources = FretboardConstants.ActionSources;
@@ -15,9 +17,9 @@ var AppDispatcher = objectAssign(new Dispatcher(), {
       source: ActionSources.SERVER_ACTION,
       action: action
     };
-    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※")
-    console.log("❉  DISPATCHER :: " + payload.source + " :: "  + payload.action.type)
-    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※")
+    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
+    console.log("❉  DISPATCHER :: " + payload.source + " :: "  + payload.action.type);
+    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
     this.dispatch(payload);
     
   },
@@ -31,9 +33,9 @@ var AppDispatcher = objectAssign(new Dispatcher(), {
       source:  ActionSources.VIEW_ACTION,
       action: action
     };
-    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※")
-    console.log("※  DISPATCHER :: " + payload.source + " :: "  + payload.action.type)
-    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※")
+    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
+    console.log("※  DISPATCHER :: " + payload.source + " :: "  + payload.action.type);
+    console.log("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
     this.dispatch(payload);
     
   }

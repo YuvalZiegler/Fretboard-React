@@ -10,7 +10,6 @@ var Actions = require('../actions/FretboardActions');
 var React = require('react/addons');
 var Teoria = require('Teoria');
 var Utils = require('../utilities/FretboardUtilityFunctions');
-var _ = require('lodash');
 
 /*********************************
 //  FRETBOARD COMPONENT
@@ -19,7 +18,13 @@ var _ = require('lodash');
 //  activeNotes ( Array / String ) :  ["c","e","g"] or "c,e,f,g,a,b,c"
 //  display ('notes','intervals')
 **********************************/
-var _state;
+var _state={ 
+  grid:[],
+  display:"notes",
+
+};
+
+
 var Fretboard = React.createClass({
 
   propTypes:{
@@ -28,7 +33,7 @@ var Fretboard = React.createClass({
         React.PropTypes.array
     ]),
     name: React.PropTypes.string,
-    display: React.PropTypes.oneOf(['notes', 'intervals']),
+    display: React.PropTypes.oneOf(["notes", "intervals"]),
     numberOfFrets:React.PropTypes.number
   },
 
@@ -36,24 +41,21 @@ var Fretboard = React.createClass({
     return {
       strings:"e,a,d,g,b,e",
       name:"C major",
-      numberOfFrets:11
+      numberOfFrets:11,
+      display:'intervals'
     };
   },
 
-  // convert string to array if needed
-  stringToArray:function(stringOrArray){
-    return ( "string" != typeof stringOrArray ?  stringOrArray : (stringOrArray).split(",") );
-  },
 
   getStrings: function () {
-    return _state.map(function(frets,index){ 
+    return _state.grid.map(function(frets,index){ 
       return ( <FretboardString key={"string-"+index} frets={ frets }/> )}
     )
   },
 
   render: function () {
-    _state = Utils.createImmutableDataMap( Utils.stringToArray(this.props.strings), Utils.parseScaleOrChord( this.props.name) )
-       
+    _state.grid = Utils.createImmutableDataMap( Utils.stringToArray(this.props.strings), Utils.parseScaleOrChord( this.props.name) )
+    _state.display = this.props.display; 
     return <div className="fretboard">{ this.getStrings().toJS() }</div>
   },
 });
@@ -137,7 +139,7 @@ var Fret = React.createClass({
     return (
      <div className="fret-wrapper">
         <div className={ "fret " + ( this.props.interval ? " active " + this.props.interval  : "")} data-note-id={ this.props.chroma } >
-          <Note noteName={ this.props.noteName } chroma={this.props.chroma } />
+          <Note noteName={ this.props.noteName } chroma={this.props.chroma } interval={this.props.interval}/>
         </div>
      </div>
     )
@@ -155,18 +157,18 @@ var Note = React.createClass({
   },
 
   render:function(){
-    
+      
      return(
       <div className="note" onClick={ this._onClick }>
         <span >
-          { this.props.noteName }
+          { ( _state.display==='notes' || this.props.interval===undefined ) ?  this.props.noteName : this.props.interval } 
         </span>
         </div>
       )
   }
 })
 
-// Attaching classes to the module export for test?
+// Attaching classes to the module export for testing
 Fretboard.FretboardString = FretboardString;
 Fretboard.StringUI        = StringUI;
 Fretboard.Fret            = Fret;

@@ -1,4 +1,5 @@
 var Fretboard = require('./Fretboard.react.jsx');
+var FretboardHeader = require('./FretboardHeader.react.jsx');
 var Debug = require('./Debug.react.jsx');
 var FretboardStore = require('../stores/FretboardStore');
 
@@ -26,7 +27,8 @@ var App = React.createClass({
         return ( 
           <div id="application">
             {this.getDebugView()}
-            <Fretboard strings={ this.state.strings } name={ this.state.name }  />
+            <FretboardHeader name={ this.state.name } />
+            <Fretboard strings={ this.state.strings } name={ this.state.name } display="notes" numberOfFrets={5} />
             
          </div>
         )
@@ -37,9 +39,9 @@ var App = React.createClass({
     },
      
     _onChange: function () {
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        console.log("∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑")
         console.log("~~ App ::  _onChange ")
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        console.log("∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑∑")
         this.setState( getStateFromStores() );
     }
 

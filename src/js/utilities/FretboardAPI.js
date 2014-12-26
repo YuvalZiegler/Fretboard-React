@@ -1,3 +1,5 @@
+'use strict';
+
 var FretboardActions = require('../actions/FretboardActions');
 
 module.exports = {

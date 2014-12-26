@@ -1,7 +1,7 @@
 
 var dest = './build';
 var src  = './src';
-var test = './tests'
+var test = './tests';
 
 
 
@@ -43,7 +43,7 @@ module.exports = {
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
-      entries: src + '/js/app.js',
+      entries: src + '/js/app.jsx',
       dest: dest,
       outputName: 'app.js'
     },
