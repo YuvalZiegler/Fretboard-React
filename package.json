@@ -46,6 +46,7 @@
     "statics": "~0.1.0",
     "stripify": "^2.0.0",
     "uglify-js": "~2.4.15",
+    "uglifyify": "^3.0.1",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "~2.0.0"
   },
